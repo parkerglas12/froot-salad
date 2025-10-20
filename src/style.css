@@ -1,0 +1,358 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+/* VARIABLES */
+:root {
+  --background-color: #fff;
+  --black: #111;
+  --btn-color: #e6e6e6;
+  --btn-hover-color: #d4d4d4;
+  --btn-disabled-color: #9b9494;
+  --green: rgba(147, 245, 138, 0.75);
+  --red: rgba(231, 105, 98, 0.75);
+}
+
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--black);
+  font-family: "Outfit", sans-serif;
+}
+
+/* TEXT SIZES */
+.heading {
+  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.text-lg {
+  font-size: clamp(1.5rem, 2.15vw, 2rem);
+  font-weight: 500;
+}
+
+.text-med {
+  font-size: clamp(1.25rem, 1.75vw, 1.5rem);
+  font-weight: 400;
+}
+
+.text-sm {
+  font-size: clamp(1.05rem, 1.1vw, 1.1rem);
+  font-weight: 300;
+}
+
+/* UTILITIES */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.effect {
+  padding: 0.5rem 0;
+  background-color: var(--btn-color);
+  border-radius: 0.25rem;
+}
+
+.max-cols {
+  grid-column: -1 / 1;
+  text-align: center;
+}
+
+.border-bottom {
+  border-bottom: 0.1rem solid var(--black);
+}
+
+.border-left {
+  border-left: 0.1rem solid var(--black);
+}
+
+.green {
+  background-color: var(--green);
+}
+
+.red {
+  background-color: var(--red);
+}
+
+/* MAIN LAYOUT */
+.main-container {
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+/* NAVBAR LAYOUT*/
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: clamp(300px, 95%, 500px);
+  margin: 1rem auto 0;
+}
+
+.navbar.main {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar .nav-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar .nav-container .btn {
+  width: max(3vw, 40px);
+  height: max(3vw, 40px);
+  padding: 0.25rem;
+  background-color: var(--btn-color);
+  border-radius: 0.25rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar .nav-container .btn.active {
+  background-color: var(--green);
+}
+
+/* GRID LAYOUT */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: clamp(250px, 90vw, 400px);
+  margin-top: max(2vw, 1.25rem);
+}
+
+.grid-container .grid-item {
+  position: relative;
+  border-top: 0.1rem solid var(--black);
+  border-right: 0.1rem solid var(--black);
+  aspect-ratio: 1 / 1;
+  transition: background-color 0.5s ease;
+}
+
+.grid-container .grid-item img {
+  width: 95%;
+  height: 95%;
+  object-fit: cover;
+}
+
+.grid-container .grid-item .icon {
+  position: absolute;
+  top: -5%;
+  right: -5%;
+  z-index: 1001;
+}
+
+/* KEYBOARD LAYOUT*/
+.keyboard-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  width: clamp(250px, 90vw, 400px);
+  margin-top: max(2vw, 1.25rem);
+  user-select: none;
+}
+
+.keyboard-container .froot-key {
+  background-color: var(--btn-color);
+  border-radius: 0.25rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.keyboard-container .froot-key.absent {
+  background-color: var(--btn-disabled-color);
+}
+
+.keyboard-container .froot-key img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* STATS LAYOUT*/
+.stats-container {
+  min-height: 75vh;
+}
+
+.stats-container .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  width: clamp(300px, 85vw, 700px);
+  margin-top: max(2.5vw, 1.5rem);
+  padding-bottom: 1.5rem;
+}
+
+.stats-container .stats-grid .stats-item {
+  flex-direction: column;
+  width: 100%;
+  padding: 0.5rem 0;
+  background-color: var(--btn-color);
+  border-radius: 0.25rem;
+}
+
+.stats-container .stats-grid .stats-item .stats-text {
+  gap: 0.5rem;
+}
+
+/* HOWTO LAYOUT */
+.howto-container {
+  min-height: 75vh;
+}
+
+.howto-container .howto-layout {
+  flex-direction: column;
+  gap: 0.75rem;
+  width: clamp(300px, 85vw, 700px);
+  margin-top: max(2.5vw, 1.5rem);
+  padding-bottom: 1.5rem;
+}
+
+.howto-container .howto-layout .example-img {
+  border: 0.1rem #111 solid;
+  width: clamp(225px, 90%, 425px);
+  margin: 0.5rem 0;
+}
+
+.howto-container .howto-layout .effect {
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.howto-container .howto-layout .effect.small {
+  width: clamp(250px, 90%, 600px);
+}
+
+.howto-container .howto-layout .text-sm {
+  width: 100%;
+  text-align: left;
+}
+
+.howto-container .howto-layout .example-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.howto-container .howto-layout .example-container .text-sm {
+  display: flex;
+  align-items: center;
+  grid-column: span 3;
+}
+
+.howto-container .howto-layout .example-container img {
+  width: clamp(50px, 30%, 75px);
+  margin: 0 0.5rem;
+  border: 0.1rem #111 solid;
+}
+
+/* MODAL LAYOUT*/
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  z-index: 1002;
+}
+
+.modal-container .modal {
+  flex-direction: column;
+  gap: 0.5rem;
+  width: max(max(40vw, 40vh), 300px);
+  padding: clamp(0.75rem, 6vh, 1.5rem) clamp(0.75rem, 3vw, 1.5rem);
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  z-index: 1003;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+.modal-container .modal-froots {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.modal-container .modal-froots img {
+  width: 100%;
+}
+
+.modal-container .modal .modal-btn {
+  margin-top: 0.25rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  background-color: var(--btn-color);
+  text-align: center;
+  color: var(--black);
+  outline: none;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-container .modal .intro-example {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.modal-container .modal .intro-example .intro-container {
+  display: flex;
+  align-items: center;
+  margin: 0.25rem 0;
+}
+
+.modal-container .modal .intro-example .intro-container img {
+  position: relative;
+  width: clamp(25px, 25%, 50px);
+  margin: 0 0.5rem;
+  border: 0.1rem #111 solid;
+}
+
+/* HOVER EFFECTS */
+.navbar .nav-container .btn:hover,
+.keyboard-container .froot-key.clickable.enter-key:hover {
+  cursor: pointer;
+  background-color: var(--green);
+  transform: scale(1.05);
+}
+
+.keyboard-container .froot-key.clickable:hover,
+.modal-container .modal .modal-btn:hover {
+  cursor: pointer;
+  background-color: var(--btn-hover-color);
+  transform: scale(1.05);
+}
+
+.keyboard-container .froot-key.clickable.delete-key:hover {
+  cursor: pointer;
+  background-color: var(--red);
+  transform: scale(1.05);
+}
+
+.keyboard-container .froot-key.clickable:active {
+  transform: scale(0.9);
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 769px) {
+  .keyboard-container {
+    grid-template-columns: repeat(6, 1fr);
+    margin-top: 2rem;
+  }
+
+  .keyboard-container .froot-key.max-span {
+    grid-column: span 3;
+    padding: 0.5rem 0;
+  }
+
+  .howto-container .howto-layout .example-container .example-froots,
+  .howto-container .howto-layout .example-container .text-sm {
+    grid-column: span 2;
+  }
+}
