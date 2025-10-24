@@ -10,7 +10,7 @@ function Modal({ modalType, solution, roundGuesses, handleModalClick }) {
   return (
     <div className="modal-container flex-center">
       <motion.div
-        className="modal flex-center"
+        className={`modal flex-center ${modalType === "intro" && "intro"}`}
         exit="exit"
         initial="hidden"
         animate="visible"

@@ -38,9 +38,13 @@ function Grid({ gridArray, fullResults, currentRound }) {
           className={`grid-item flex-center ${
             index % cols === 0 && "border-left"
           } ${index >= rows * cols - cols && "border-bottom"} ${
-            fullResults[index] === "correct" && "green"
-          }
-            ${fullResults[index] === "absent" && "red"}
+            fullResults[index] === "correct"
+              ? "green"
+              : fullResults[index] === "absent"
+              ? "red"
+              : fullResults[index] === "left" || fullResults[index] === "right"
+              ? "yellow"
+              : ""
           }`}
           key={index}
         >

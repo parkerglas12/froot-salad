@@ -10,7 +10,7 @@ import {
 function Stats({ wins, losses, streak, guesses, maxStreak, gamesPlayed }) {
   return (
     <section className="stats-grid">
-      <h2 className="heading effect max-cols">Stats</h2>
+      <h2 className="heading effect max-cols">Statistics</h2>
       <div className="stats-item flex-center br">
         <h2 className="text-lg">Games</h2>
         <div className="stats-text flex-center">
@@ -22,35 +22,35 @@ function Stats({ wins, losses, streak, guesses, maxStreak, gamesPlayed }) {
         <h2 className="text-lg">Wins</h2>
         <div className="stats-text flex-center">
           <h2 className="text-med">{wins}</h2>
-          <Trophy color={"#111"} />
+          <Trophy color={"#deb203"} />
         </div>
       </div>
       <div className="stats-item flex-center br">
         <h2 className="text-lg">Losses</h2>
         <div className="stats-text flex-center">
           <h2 className="text-med">{losses}</h2>
-          <Ban color={"#111"} />
+          <Ban color={"#e76962"} />
         </div>
       </div>
       <div className="stats-item flex-center br">
         <h2 className="text-lg">Guesses</h2>
         <div className="stats-text flex-center">
           <h2 className="text-med">{guesses}</h2>
-          <Lightbulb color={"#111"} />
+          <Lightbulb color={"#467805"} />
         </div>
       </div>
       <div className="stats-item flex-center br">
         <h2 className="text-lg">Streak</h2>
         <div className="stats-text flex-center">
           <h2 className="text-med">{streak}</h2>
-          <Flame color={"#111"} />
+          <Flame color={"#ff8400"} />
         </div>
       </div>
       <div className="stats-item flex-center br">
         <h2 className="text-lg">Max Streak</h2>
         <div className="stats-text flex-center">
           <h2 className="text-med">{maxStreak}</h2>
-          <FlameKindling color={"#111"} />
+          <FlameKindling color={"#ff8400"} />
         </div>
       </div>
     </section>

@@ -30,10 +30,12 @@ function App() {
   );
   const [result, setResult] = useState([]);
   const [fullResults, setFullResults] = useState([]);
+  const [partial, setPartial] = useState([]);
+  const [inSolution, setInSolution] = useState([]);
   const [notInPuzzle, setNotInPuzzle] = useState([]);
   const [solution, setSolution] = useState(getRandomSalad(froots));
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState("");
+  const [modalType, setModalType] = useState("intro");
   const [prevSolution, setPrevSolution] = useState([]);
   const [currentPage, setCurrentPage] = useState("home");
 
@@ -64,7 +66,7 @@ function App() {
   });
   const [introModalShown, setIntroModalShown] = useState(() => {
     const storedValue = localStorage.getItem("introModalShown");
-    return storedValue ? JSON.parse(storedValue) : false;
+    return storedValue ? JSON.parse(storedValue) : 0;
   });
 
   // UPDATING LOCAL STORAGE
@@ -175,6 +177,8 @@ function App() {
     setCurrentAttempt(new Array(cols).fill(null));
     setResult([]);
     setFullResults([]);
+    setPartial([]);
+    setInSolution([]);
     setNotInPuzzle([]);
     setSolution(getRandomSalad(froots));
   }
@@ -198,14 +202,14 @@ function App() {
       !currentAttempt.includes(froot) &&
       !notInPuzzle.includes(froot)
     ) {
-      setGridArray((prevArray) => {
-        const newArray = [...prevArray]; // Create a copy of the previous array
+      setGridArray((prev) => {
+        const newArray = [...prev]; // Create a copy of the previous array
         if (firstNullIdx === -1) return newArray; // If no null found, return the original array
         newArray[firstNullIdx] = froot; // Update the first null position with the new froot
         return newArray;
       });
-      setCurrentAttempt((prevArray) => {
-        const newArray = [...prevArray];
+      setCurrentAttempt((prev) => {
+        const newArray = [...prev];
         const attemptFirstNull = currentAttempt.findIndex(
           (item) => item === null
         );
@@ -222,13 +226,13 @@ function App() {
       firstNullIdx !== 0 &&
       firstNullIdx > currentRound * cols - cols
     ) {
-      setGridArray((prevArray) => {
-        const newArray = [...prevArray];
+      setGridArray((prev) => {
+        const newArray = [...prev];
         newArray[firstNullIdx - 1] = null;
         return newArray;
       });
-      setCurrentAttempt((prevArray) => {
-        const newArray = [...prevArray];
+      setCurrentAttempt((prev) => {
+        const newArray = [...prev];
         const attemptFirstNull = currentAttempt.findIndex(
           (item) => item === null
         );
@@ -250,6 +254,10 @@ function App() {
       newResult.forEach((res, idx) => {
         if (res === "absent") {
           setNotInPuzzle((prev) => [...prev, currentAttempt[idx]]);
+        } else if (res === "correct") {
+          setInSolution((prev) => [...prev, currentAttempt[idx]]);
+        } else if (res === "left" || res === "right") {
+          setPartial((prev) => [...prev, currentAttempt[idx]]);
         }
       });
       setResult(newResult);
@@ -289,6 +297,8 @@ function App() {
             currentRound={currentRound}
           />
           <Keyboard
+            partial={partial}
+            inSolution={inSolution}
             notInPuzzle={notInPuzzle}
             handleKeyPress={handleKeyPress}
             handleOtherKeys={handleOtherKeys}

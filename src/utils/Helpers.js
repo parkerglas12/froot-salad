@@ -14,6 +14,9 @@ export const froots = [
   "pear",
   "raspberry",
 ];
+export const url = "https://frootsalad.com";
+export const startingMsg =
+  "I've been playing this cute and cozy puzzle game called Froot Salad🍇. It’s like Wordle + Mastermind and sooo addicting.";
 
 export function getRandomSalad(frootArray) {
   return frootArray.toSorted(() => 0.5 - Math.random()).slice(0, cols);

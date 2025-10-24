@@ -1,3 +1,5 @@
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
+
 function HowTo() {
   return (
     <section className="howto-layout flex-center">
@@ -10,40 +12,76 @@ function HowTo() {
       <p className="text-sm">
         To start just enter any combination of froots, for example:
       </p>
-      <img src="example1.webp" alt="Example One" className="example-img" />
+      <div className="example-image">
+        <div className="grid-item flex-center green">
+          <img src="apple.webp" alt="apple" />
+        </div>
+        <div className="grid-item flex-center yellow">
+          <img src="blueberry.webp" alt="blueberry" />
+          <ChevronsRight className="icon" size={20} />
+        </div>
+        <div className="grid-item flex-center red">
+          <img src="grape.webp" alt="grape" />
+        </div>
+        <div className="grid-item flex-center yellow">
+          <img src="raspberry.webp" alt="raspberry" />
+          <ChevronsLeft className="icon" size={20} />
+        </div>
+        <div className="grid-item flex-center green">
+          <img src="pineapple.webp" alt="" />
+        </div>
+        <div className="grid-item flex-center yellow">
+          <img src="watermelon.webp" alt="watermelon" />
+          <ChevronsLeft className="icon" size={20} />
+        </div>
+        <div className="grid-item flex-center red">
+          <img src="pear.webp" alt="pear" />
+        </div>
+      </div>
       <div className="effect small">
-        <div className="example-container border-bottom">
+        <div className="example-container">
           <div className="example-froots">
-            <img src="apple.webp" alt="apple" className="green" />
-            <img src="pear.webp" alt="pear" className="green" />
+            <div className="grid-item flex-center green">
+              <img src="apple.webp" alt="apple" />
+            </div>
+            <div className="grid-item flex-center green">
+              <img src="pineapple.webp" alt="" />
+            </div>
           </div>
-          <p className="text-sm">are both in the correct position.</p>
-        </div>
-        <div className="example-container border-bottom">
-          <div className="example-froots">
-            <img src="grape.webp" alt="grape" className="red" />
-            <img src="watermelon.webp" alt="watermelon" className="red" />
-          </div>
-          <p className="text-sm">aren't in the solution.</p>
-        </div>
-        <div className="example-container border-bottom">
-          <div className="example-froots">
-            <img src="pineapple.webp" alt="pineapple" />
-            <img src="raspberry.webp" alt="raspberry" />
-          </div>
-          <p className="text-sm">
-            are in the solution but need to be further left than their current
-            position.
-          </p>
+          <p className="text-sm">Correct position</p>
         </div>
         <div className="example-container">
           <div className="example-froots">
-            <img src="blueberry.webp" alt="blueberry" />
+            <div className="grid-item flex-center red">
+              <img src="grape.webp" alt="grape" />
+            </div>
+            <div className="grid-item flex-center red">
+              <img src="pear.webp" alt="pear" />
+            </div>
           </div>
-          <p className="text-sm">
-            is in the solution but needs to be further right of its current
-            position.
-          </p>
+          <p className="text-sm">Not in the solution</p>
+        </div>
+        <div className="example-container">
+          <div className="example-froots">
+            <div className="grid-item flex-center yellow">
+              <img src="raspberry.webp" alt="raspberry" />
+              <ChevronsLeft className="icon" size={18} />
+            </div>
+            <div className="grid-item flex-center yellow">
+              <img src="watermelon.webp" alt="watermelon" />
+              <ChevronsLeft className="icon" size={18} />
+            </div>
+          </div>
+          <p className="text-sm">In solution — move left</p>
+        </div>
+        <div className="example-container">
+          <div className="example-froots">
+            <div className="grid-item flex-center yellow">
+              <img src="blueberry.webp" alt="blueberry" />
+              <ChevronsRight className="icon" size={18} />
+            </div>
+          </div>
+          <p className="text-sm">In solution — move right</p>
         </div>
       </div>
     </section>

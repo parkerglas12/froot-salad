@@ -2,13 +2,25 @@ import { Delete, CircleCheckBig } from "lucide-react";
 
 import { froots } from "../utils/Helpers.js";
 
-function Keyboard({ notInPuzzle, handleKeyPress, handleOtherKeys }) {
+function Keyboard({
+  partial,
+  inSolution,
+  notInPuzzle,
+  handleKeyPress,
+  handleOtherKeys,
+}) {
   return (
     <section className="keyboard-container">
       {froots.map((froot) => (
         <div
           className={`froot-key flex-center ${
             !notInPuzzle.includes(froot) ? "clickable" : "absent"
+          } ${
+            inSolution.includes(froot)
+              ? "green"
+              : partial.includes(froot)
+              ? "yellow"
+              : ""
           }`}
           onClick={() => handleKeyPress(froot)}
           key={froot}

@@ -8,7 +8,10 @@
   --btn-hover-color: #d4d4d4;
   --btn-disabled-color: #9b9494;
   --green: rgba(147, 245, 138, 0.75);
+  --dark-green: rgb(100, 223, 89);
   --red: rgba(231, 105, 98, 0.75);
+  --yellow: rgba(255, 233, 128, 0.75);
+  --dark-yellow: rgba(255, 196, 0, 1);
 }
 
 /* RESET */
@@ -68,12 +71,20 @@
   border-left: 0.1rem solid var(--black);
 }
 
+.m1 {
+  margin-bottom: 1rem;
+}
+
 .green {
   background-color: var(--green);
 }
 
 .red {
   background-color: var(--red);
+}
+
+.yellow {
+  background-color: var(--yellow);
 }
 
 /* MAIN LAYOUT */
@@ -106,8 +117,8 @@
 }
 
 .navbar .nav-container .btn {
-  width: max(3vw, 40px);
-  height: max(3vw, 40px);
+  width: clamp(40px, 3vw, 50px);
+  height: clamp(40px, 3vw, 50px);
   padding: 0.25rem;
   background-color: var(--btn-color);
   border-radius: 0.25rem;
@@ -118,7 +129,7 @@
   background-color: var(--green);
 }
 
-/* GRID LAYOUT */
+/* GRID LAYOUT (EXTENDED TO OTHER ELEMENTS THAN THE GRID)*/
 .grid-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -126,7 +137,7 @@
   margin-top: max(2vw, 1.25rem);
 }
 
-.grid-container .grid-item {
+.grid-item {
   position: relative;
   border-top: 0.1rem solid var(--black);
   border-right: 0.1rem solid var(--black);
@@ -134,16 +145,16 @@
   transition: background-color 0.5s ease;
 }
 
-.grid-container .grid-item img {
+.grid-item img {
   width: 95%;
   height: 95%;
   object-fit: cover;
 }
 
-.grid-container .grid-item .icon {
+.grid-item .icon {
   position: absolute;
-  top: -5%;
-  right: -5%;
+  top: -3%;
+  right: -3%;
   z-index: 1001;
 }
 
@@ -163,6 +174,14 @@
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
+.keyboard-container .froot-key.green {
+  background-color: var(--green);
+}
+
+.keyboard-container .froot-key.yellow {
+  background-color: var(--yellow);
+}
+
 .keyboard-container .froot-key.absent {
   background-color: var(--btn-disabled-color);
 }
@@ -173,8 +192,9 @@
   object-fit: cover;
 }
 
-/* STATS LAYOUT*/
-.stats-container {
+/* STATS & HOWTO LAYOUT*/
+.stats-container,
+.howto-container {
   min-height: 75vh;
 }
 
@@ -199,11 +219,6 @@
   gap: 0.5rem;
 }
 
-/* HOWTO LAYOUT */
-.howto-container {
-  min-height: 75vh;
-}
-
 .howto-container .howto-layout {
   flex-direction: column;
   gap: 0.75rem;
@@ -212,10 +227,12 @@
   padding-bottom: 1.5rem;
 }
 
-.howto-container .howto-layout .example-img {
-  border: 0.1rem #111 solid;
-  width: clamp(225px, 90%, 425px);
-  margin: 0.5rem 0;
+.howto-container .howto-layout .example-image {
+  display: flex;
+  width: clamp(275px, 100%, 425px);
+  margin: 0.75rem 0;
+  border-bottom: 0.1rem #111 solid;
+  border-left: 0.1rem #111 solid;
 }
 
 .howto-container .howto-layout .effect {
@@ -225,7 +242,11 @@
 }
 
 .howto-container .howto-layout .effect.small {
-  width: clamp(250px, 90%, 600px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  width: clamp(300px, 85vw, 650px);
 }
 
 .howto-container .howto-layout .text-sm {
@@ -234,21 +255,18 @@
 }
 
 .howto-container .howto-layout .example-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 100%;
-  padding: 1rem 0;
-}
-
-.howto-container .howto-layout .example-container .text-sm {
   display: flex;
   align-items: center;
-  grid-column: span 3;
 }
 
-.howto-container .howto-layout .example-container img {
-  width: clamp(50px, 30%, 75px);
-  margin: 0 0.5rem;
+.howto-container .howto-layout .example-container .example-froots {
+  display: flex;
+  flex-shrink: 2.5;
+}
+
+.howto-container .howto-layout .example-container .grid-item {
+  width: clamp(30px, 45%, 50px);
+  margin: 0 0.25rem;
   border: 0.1rem #111 solid;
 }
 
@@ -266,21 +284,36 @@
 .modal-container .modal {
   flex-direction: column;
   gap: 0.5rem;
-  width: max(max(40vw, 40vh), 300px);
+  width: max(max(35vw, 35vh), 300px);
   padding: clamp(0.75rem, 6vh, 1.5rem) clamp(0.75rem, 3vw, 1.5rem);
   background-color: var(--background-color);
   border-radius: 1rem;
   z-index: 1003;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.35);
 }
 
-.modal-container .modal-froots {
+.modal-container .modal.intro {
+  width: max(max(40vw, 40vh), 300px);
+}
+
+.modal-container .modal .text-sm {
+  width: 100%;
+  text-align: left;
+}
+
+.modal-container .modal .modal-froots {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
 
-.modal-container .modal-froots img {
+.modal-container .modal .modal-froots img {
   width: 100%;
+}
+
+.modal-container .modal .social-media {
+  display: flex;
+  gap: max(1vw, 0.5rem);
+  margin-top: 0.25rem;
 }
 
 .modal-container .modal .modal-btn {
@@ -295,28 +328,30 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+/* INTRO MODAL LAYOUT*/
 .modal-container .modal .intro-example {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 0.05rem;
   width: 100%;
+  margin: 0.5rem 0;
 }
 
 .modal-container .modal .intro-example .intro-container {
   display: flex;
   align-items: center;
-  margin: 0.25rem 0;
 }
 
-.modal-container .modal .intro-example .intro-container img {
-  position: relative;
-  width: clamp(25px, 25%, 50px);
-  margin: 0 0.5rem;
-  border: 0.1rem #111 solid;
+.modal-container .modal .intro-example .intro-container .grid-item {
+  flex-basis: 50px;
+  flex-shrink: 0;
+  width: clamp(35px, 45%, 45px);
+  margin-right: 0.25rem;
+  border: 0.1rem solid #111;
 }
 
 /* HOVER EFFECTS */
-.navbar .nav-container .btn:hover,
-.keyboard-container .froot-key.clickable.enter-key:hover {
+.navbar .nav-container .btn:hover {
   cursor: pointer;
   background-color: var(--green);
   transform: scale(1.05);
@@ -329,14 +364,16 @@
   transform: scale(1.05);
 }
 
-.keyboard-container .froot-key.clickable.delete-key:hover {
-  cursor: pointer;
-  background-color: var(--red);
-  transform: scale(1.05);
-}
-
 .keyboard-container .froot-key.clickable:active {
   transform: scale(0.9);
+}
+
+.keyboard-container .froot-key.green:hover {
+  background-color: var(--dark-green);
+}
+
+.keyboard-container .froot-key.yellow:hover {
+  background-color: var(--dark-yellow);
 }
 
 /* MEDIA QUERIES */
@@ -349,10 +386,5 @@
   .keyboard-container .froot-key.max-span {
     grid-column: span 3;
     padding: 0.5rem 0;
-  }
-
-  .howto-container .howto-layout .example-container .example-froots,
-  .howto-container .howto-layout .example-container .text-sm {
-    grid-column: span 2;
   }
 }

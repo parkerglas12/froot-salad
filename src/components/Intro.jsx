@@ -1,3 +1,5 @@
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
+
 function Intro() {
   return (
     <>
@@ -8,20 +10,30 @@ function Intro() {
         feedback after each guess:
       </p>
       <div className="intro-example">
-        <div className="intro-container">
-          <img src="green-froot.webp" alt="apple" className="green" />
+        <div className="intro-container m1">
+          <div className="grid-item flex-center green">
+            <img src="apple.webp" alt="apple" />
+          </div>
           <p className="text-sm">Correct position</p>
         </div>
-        <div className="intro-container">
-          <img src="red-froot.webp" alt="grape" className="red" />
+        <div className="intro-container m1">
+          <div className="grid-item flex-center red">
+            <img src="grape.webp" alt="grape" />
+          </div>
           <p className="text-sm">Not in the solution</p>
         </div>
         <div className="intro-container">
-          <img src="right-froot.webp" alt="blueberry" />
+          <div className="grid-item flex-center yellow">
+            <img src="blueberry.webp" alt="blueberry" />
+            <ChevronsRight className="icon" size={20} />
+          </div>
           <p className="text-sm">Move right</p>
         </div>
         <div className="intro-container">
-          <img src="left-froot.webp" alt="pineapple" />
+          <div className="grid-item flex-center yellow">
+            <img src="kiwi.webp" alt="kiwi" />
+            <ChevronsLeft className="icon" size={20} />
+          </div>
           <p className="text-sm">Move left</p>
         </div>
       </div>
