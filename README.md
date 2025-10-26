@@ -6,7 +6,7 @@ Play Froot Salad, a deliciously clever logic puzzle that challenges you to use s
 
 ## How To Play
 
-- Your goal is to guess a hidden combination of 7 froots
+- Your goal is to guess a hidden combination of 8 froots
 - After each guess you'll receive feedback to help you get closer to the correct answer
 - If the square turns green, it's in the correct place
 - If it turns red, it's not in the solution

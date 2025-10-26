@@ -5,7 +5,7 @@ function Intro() {
     <>
       <h2 className="text-lg">Welcome to Froot Salad!</h2>
       <p className="text-sm">
-        Your goal is to guess a hidden combination of 7 froots in 6 guesses.
+        Your goal is to guess a hidden combination of 8 froots in 6 guesses.
         There are never duplicate froots in a solution, and you'll receive
         feedback after each guess:
       </p>
@@ -38,7 +38,7 @@ function Intro() {
         </div>
       </div>
       <p className="text-sm">
-        To get started just enter your favorite combination of 7 froots!
+        To get started just enter your favorite combination of 8 froots!
       </p>
     </>
   );

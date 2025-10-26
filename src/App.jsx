@@ -38,6 +38,8 @@ function App() {
   const [modalType, setModalType] = useState("intro");
   const [prevSolution, setPrevSolution] = useState([]);
   const [currentPage, setCurrentPage] = useState("home");
+  const [xpGain, setXpGain] = useState(0);
+  const [isLevelingUp, setIsLevelingUp] = useState(false);
 
   // LOCAL STORAGE STATES
   const [gamesPlayed, setGamesPlayed] = useState(() => {
@@ -62,6 +64,18 @@ function App() {
   });
   const [maxStreak, setMaxStreak] = useState(() => {
     const storedValue = localStorage.getItem("maxStreak");
+    return storedValue ? JSON.parse(storedValue) : 0;
+  });
+  const [level, setLevel] = useState(() => {
+    const storedValue = localStorage.getItem("level");
+    return storedValue ? JSON.parse(storedValue) : 1;
+  });
+  const [levelUp, setLevelUp] = useState(() => {
+    const storedValue = localStorage.getItem("levelUp");
+    return storedValue ? JSON.parse(storedValue) : 250;
+  });
+  const [xp, setXp] = useState(() => {
+    const storedValue = localStorage.getItem("xp");
     return storedValue ? JSON.parse(storedValue) : 0;
   });
   const [introModalShown, setIntroModalShown] = useState(() => {
@@ -95,6 +109,18 @@ function App() {
   }, [maxStreak]);
 
   useEffect(() => {
+    localStorage.setItem("level", JSON.stringify(level));
+  }, [level]);
+
+  useEffect(() => {
+    localStorage.setItem("levelUp", JSON.stringify(levelUp));
+  }, [levelUp]);
+
+  useEffect(() => {
+    localStorage.setItem("xp", JSON.stringify(xp));
+  }, [xp]);
+
+  useEffect(() => {
     localStorage.setItem("introModalShown", JSON.stringify(introModalShown));
   }, [introModalShown]);
 
@@ -110,47 +136,11 @@ function App() {
 
   // USE EFFECTS
   useEffect(() => {
-    function handleKeyDown(e) {
-      const key = e.key;
-      if (key === "Enter") {
-        handleOtherKeys("enter");
-      } else if (key === "Backspace") {
-        handleOtherKeys("delete");
-      }
-    }
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [handleOtherKeys]);
-
-  useEffect(() => {
     if (!introModalShown) {
       setShowModal(true);
       setModalType("intro");
     }
   }, []);
-
-  useEffect(() => {
-    if (result.every((res) => res === "correct") && result.length === cols) {
-      setTimeout(() => {
-        setModalType("win");
-        setWins((prev) => prev + 1);
-        setStreak((prev) => prev + 1);
-        if (streak + 1 > maxStreak) {
-          setMaxStreak(streak + 1);
-        }
-        gameReset();
-      }, 2000);
-    } else if (currentRound > rows) {
-      setTimeout(() => {
-        setModalType("loss");
-        setLosses((prev) => prev + 1);
-        setStreak(0);
-        gameReset();
-      }, 2000);
-    }
-  }, [currentRound, result]);
 
   // FUNCTIONS
   const { width, height } = useWindowSize();
@@ -168,8 +158,6 @@ function App() {
 
   function gameReset() {
     setGamesPlayed((prev) => prev + 1);
-    setGuesses((prev) => prev + currentRound - 1);
-    setRoundGuesses(currentRound - 1);
     setPrevSolution(solution);
     setShowModal(true);
     setGridArray(new Array(rows * cols).fill(null));
@@ -186,6 +174,9 @@ function App() {
   function handleModalClick() {
     setShowModal(false);
     setRoundGuesses(0);
+    if (isLevelingUp) {
+      setIsLevelingUp(false);
+    }
     if (!introModalShown) {
       setIntroModalShown(true);
     }
@@ -249,6 +240,9 @@ function App() {
         firstNullIdx !== currentRound * cols - cols) ||
       (key === "enter" && firstNullIdx === -1)
     ) {
+      const newRound = currentRound + 1;
+      setGuesses((prev) => prev + newRound - 1);
+      setRoundGuesses(newRound - 1);
       const newResult = checkAttempt(currentAttempt, solution);
       const newFullResults = [...fullResults, ...newResult];
       newResult.forEach((res, idx) => {
@@ -260,9 +254,40 @@ function App() {
           setPartial((prev) => [...prev, currentAttempt[idx]]);
         }
       });
+      if (
+        newResult.every((res) => res === "correct") &&
+        newResult.length === cols
+      ) {
+        setTimeout(() => {
+          const newStreak = streak + 1;
+          const xpGained = 100 + newStreak * 10;
+          const newXp = xp + 100 + newStreak * 10;
+          setXpGain(xpGained);
+          setModalType("win");
+          setWins((prev) => prev + 1);
+          setXp(newXp);
+          if (newXp >= levelUp) {
+            setLevelUp((prev) => prev * 2);
+            setLevel((prev) => prev + 1);
+            setIsLevelingUp(true);
+          }
+          setStreak(newStreak);
+          if (streak + 1 > maxStreak) {
+            setMaxStreak(streak + 1);
+          }
+          gameReset();
+        }, 2000);
+      } else if (newRound > rows) {
+        setTimeout(() => {
+          setModalType("loss");
+          setLosses((prev) => prev + 1);
+          setStreak(0);
+          gameReset();
+        }, 2000);
+      }
       setResult(newResult);
+      setCurrentRound(newRound);
       setFullResults(newFullResults);
-      setCurrentRound((prev) => prev + 1);
       setCurrentAttempt(new Array(cols).fill(null));
     }
   }
@@ -273,9 +298,14 @@ function App() {
         {showModal && (
           <>
             <Modal
+              xp={xp}
+              level={level}
+              xpGain={xpGain}
+              streak={streak}
               modalType={modalType}
               solution={prevSolution}
               roundGuesses={roundGuesses}
+              isLevelingUp={isLevelingUp}
               handleModalClick={handleModalClick}
             />
             {modalType === "win" && (
@@ -307,10 +337,13 @@ function App() {
       ) : currentPage === "stats" ? (
         <main className="stats-container flex-center">
           <Stats
+            xp={xp}
             wins={wins}
+            level={level}
             losses={losses}
             streak={streak}
             guesses={guesses}
+            levelUp={levelUp}
             maxStreak={maxStreak}
             gamesPlayed={gamesPlayed}
           />

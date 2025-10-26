@@ -1,5 +1,5 @@
 export const rows = 6;
-export const cols = 7;
+export const cols = 8;
 export const froots = [
   "apple",
   "banana",
@@ -13,6 +13,8 @@ export const froots = [
   "cherry",
   "pear",
   "raspberry",
+  "lemon",
+  "peach",
 ];
 export const url = "https://frootsalad.com";
 export const startingMsg =

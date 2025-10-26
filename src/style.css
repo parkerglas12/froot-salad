@@ -52,6 +52,12 @@
   justify-content: center;
 }
 
+.flex-column {
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
 .effect {
   padding: 0.5rem 0;
   background-color: var(--btn-color);
@@ -132,7 +138,7 @@
 /* GRID LAYOUT (EXTENDED TO OTHER ELEMENTS THAN THE GRID)*/
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   width: clamp(250px, 90vw, 400px);
   margin-top: max(2vw, 1.25rem);
 }
@@ -161,7 +167,7 @@
 /* KEYBOARD LAYOUT*/
 .keyboard-container {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 0.5rem;
   width: clamp(250px, 90vw, 400px);
   margin-top: max(2vw, 1.25rem);
@@ -192,22 +198,34 @@
   object-fit: cover;
 }
 
-/* STATS & HOWTO LAYOUT*/
-.stats-container,
-.howto-container {
-  min-height: 75vh;
+/* STATS LAYOUT*/
+.stats-container .stats-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.stats-container .stats-grid {
+.stats-container .stats-main .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   width: clamp(300px, 85vw, 700px);
-  margin-top: max(2.5vw, 1.5rem);
   padding-bottom: 1.5rem;
 }
 
-.stats-container .stats-grid .stats-item {
+.stats-container .stats-main .stats-grid:nth-child(2) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  width: clamp(300px, 85vw, 700px);
+  padding-bottom: 1.5rem;
+}
+
+.stats-container .stats-main .stats-grid:first-child {
+  margin-top: max(2.5vw, 1.5rem);
+}
+
+.stats-container .stats-main .stats-grid .stats-item {
   flex-direction: column;
   width: 100%;
   padding: 0.5rem 0;
@@ -215,8 +233,13 @@
   border-radius: 0.25rem;
 }
 
-.stats-container .stats-grid .stats-item .stats-text {
+.stats-container .stats-main .stats-grid .stats-item .stats-text {
   gap: 0.5rem;
+}
+
+/* HOW TO LAYOUT */
+.howto-container {
+  min-height: 75vh;
 }
 
 .howto-container .howto-layout {
@@ -303,7 +326,7 @@
 
 .modal-container .modal .modal-froots {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
 }
 
 .modal-container .modal .modal-froots img {
@@ -314,6 +337,17 @@
   display: flex;
   gap: max(1vw, 0.5rem);
   margin-top: 0.25rem;
+}
+
+.modal-container .modal .modal-flex {
+  display: flex;
+  align-items: center;
+}
+
+.modal-container .modal .modal-apart {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .modal-container .modal .modal-btn {
@@ -384,7 +418,7 @@
   }
 
   .keyboard-container .froot-key.max-span {
-    grid-column: span 3;
+    grid-column: span 2;
     padding: 0.5rem 0;
   }
 }

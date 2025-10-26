@@ -6,7 +6,17 @@ import LoseGame from "./LoseGame.jsx";
 
 import { dropIn } from "../utils/Animations.js";
 
-function Modal({ modalType, solution, roundGuesses, handleModalClick }) {
+function Modal({
+  xp,
+  level,
+  xpGain,
+  streak,
+  modalType,
+  solution,
+  roundGuesses,
+  isLevelingUp,
+  handleModalClick,
+}) {
   return (
     <div className="modal-container flex-center">
       <motion.div
@@ -17,7 +27,15 @@ function Modal({ modalType, solution, roundGuesses, handleModalClick }) {
         variants={dropIn}
       >
         {modalType === "win" ? (
-          <WinGame solution={solution} roundGuesses={roundGuesses} />
+          <WinGame
+            xp={xp}
+            level={level}
+            xpGain={xpGain}
+            streak={streak}
+            solution={solution}
+            isLevelingUp={isLevelingUp}
+            roundGuesses={roundGuesses}
+          />
         ) : modalType === "loss" ? (
           <LoseGame solution={solution} />
         ) : (
