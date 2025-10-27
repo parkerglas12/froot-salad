@@ -241,8 +241,6 @@ function App() {
       (key === "enter" && firstNullIdx === -1)
     ) {
       const newRound = currentRound + 1;
-      setGuesses((prev) => prev + newRound - 1);
-      setRoundGuesses(newRound - 1);
       const newResult = checkAttempt(currentAttempt, solution);
       const newFullResults = [...fullResults, ...newResult];
       newResult.forEach((res, idx) => {
@@ -258,6 +256,8 @@ function App() {
         newResult.every((res) => res === "correct") &&
         newResult.length === cols
       ) {
+        setRoundGuesses(newRound - 1);
+        setGuesses((prev) => prev + newRound - 1);
         setTimeout(() => {
           const newStreak = streak + 1;
           const xpGained = 100 + newStreak * 10;
@@ -298,7 +298,6 @@ function App() {
         {showModal && (
           <>
             <Modal
-              xp={xp}
               level={level}
               xpGain={xpGain}
               streak={streak}

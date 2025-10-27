@@ -32,13 +32,13 @@ function Keyboard({
         className="froot-key flex-center max-span clickable delete-key"
         onClick={() => handleOtherKeys("delete")}
       >
-        <Delete size={30} color="#111" />
+        <Delete size={27} color="#111" />
       </div>
       <div
         className="froot-key flex-center max-span clickable enter-key"
         onClick={() => handleOtherKeys("enter")}
       >
-        <CircleCheckBig size={30} color="#111" />
+        <CircleCheckBig size={27} color="#111" />
       </div>
     </section>
   );

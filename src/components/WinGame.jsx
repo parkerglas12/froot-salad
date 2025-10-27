@@ -7,15 +7,17 @@ import {
   TelegramIcon,
   LinkedinShareButton,
   LinkedinIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
 } from "react-share";
+
+import { motion } from "framer-motion";
+
+import { Flame, MoveRight } from "lucide-react";
 
 import { url, startingMsg } from "../utils/Helpers.js";
 
-import { Flame, MoveRight } from "lucide-react";
+import { frootParent, frootChild } from "../utils/Animations.js";
+
 function WinGame({
-  xp,
   level,
   xpGain,
   streak,
@@ -52,14 +54,21 @@ function WinGame({
           )}
         </div>
       </div>
-      <div className="modal-froots">
+      <motion.div
+        className="modal-froots"
+        variants={frootParent}
+        initial="hidden"
+        animate="visible"
+      >
         {solution.map((froot) => (
-          <img src={`${froot}.webp`} alt={froot} key={froot}></img>
+          <motion.img
+            src={`${froot}.webp`}
+            alt={froot}
+            key={froot}
+            variants={frootChild}
+          ></motion.img>
         ))}
-      </div>
-      {/* <h2 className="text-sm">
-        Having Fun? Go BANANAS and invite your friends and followers!
-      </h2> */}
+      </motion.div>
       <div className="social-media">
         <TwitterShareButton url={url} title={fullMsg}>
           <XIcon size={32} round />
@@ -73,9 +82,6 @@ function WinGame({
         <LinkedinShareButton url={url}>
           <LinkedinIcon size={32} round />
         </LinkedinShareButton>
-        {/* <WhatsappShareButton url={url} title={fullMsg}>
-          <WhatsappIcon size={32} round />
-        </WhatsappShareButton> */}
       </div>
     </>
   );

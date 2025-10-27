@@ -6,7 +6,6 @@
   --black: #111;
   --btn-color: #e6e6e6;
   --btn-hover-color: #d4d4d4;
-  --btn-disabled-color: #9b9494;
   --green: rgba(147, 245, 138, 0.75);
   --dark-green: rgb(100, 223, 89);
   --red: rgba(231, 105, 98, 0.75);
@@ -119,12 +118,12 @@
 
 .navbar .nav-container {
   display: flex;
-  gap: 1rem;
+  gap: clamp(0.5rem, 1.75vw, 1rem);
 }
 
 .navbar .nav-container .btn {
-  width: clamp(40px, 3vw, 50px);
-  height: clamp(40px, 3vw, 50px);
+  width: clamp(35px, 3.25vw, 45px);
+  height: clamp(35px, 3.25vw, 45px);
   padding: 0.25rem;
   background-color: var(--btn-color);
   border-radius: 0.25rem;
@@ -139,7 +138,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  width: clamp(250px, 90vw, 400px);
+  width: clamp(250px, 90vw, 415px);
   margin-top: max(2vw, 1.25rem);
 }
 
@@ -169,7 +168,7 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 0.5rem;
-  width: clamp(250px, 90vw, 400px);
+  width: clamp(250px, 90vw, 415px);
   margin-top: max(2vw, 1.25rem);
   user-select: none;
 }
@@ -189,7 +188,7 @@
 }
 
 .keyboard-container .froot-key.absent {
-  background-color: var(--btn-disabled-color);
+  background-color: var(--red);
 }
 
 .keyboard-container .froot-key img {
@@ -408,17 +407,4 @@
 
 .keyboard-container .froot-key.yellow:hover {
   background-color: var(--dark-yellow);
-}
-
-/* MEDIA QUERIES */
-@media screen and (max-width: 769px) {
-  .keyboard-container {
-    grid-template-columns: repeat(6, 1fr);
-    margin-top: 2rem;
-  }
-
-  .keyboard-container .froot-key.max-span {
-    grid-column: span 2;
-    padding: 0.5rem 0;
-  }
 }

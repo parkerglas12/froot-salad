@@ -20,3 +20,23 @@ export const dropIn = {
     },
   },
 };
+
+export const frootParent = {
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+export const frootChild = {
+  hidden: { scale: 0.75 },
+  visible: {
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      repeat: Infinity,
+      repeatType: "reverse",
+    },
+  },
+};

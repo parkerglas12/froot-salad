@@ -31,6 +31,10 @@ function HowTo() {
           <img src="pineapple.webp" alt="" />
         </div>
         <div className="grid-item flex-center yellow">
+          <img src="peach.webp" alt="peach" />
+          <ChevronsRight className="icon" size={20} />
+        </div>
+        <div className="grid-item flex-center yellow">
           <img src="watermelon.webp" alt="watermelon" />
           <ChevronsLeft className="icon" size={20} />
         </div>
@@ -78,6 +82,10 @@ function HowTo() {
           <div className="example-froots">
             <div className="grid-item flex-center yellow">
               <img src="blueberry.webp" alt="blueberry" />
+              <ChevronsRight className="icon" size={18} />
+            </div>
+            <div className="grid-item flex-center yellow">
+              <img src="peach.webp" alt="peach" />
               <ChevronsRight className="icon" size={18} />
             </div>
           </div>

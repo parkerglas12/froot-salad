@@ -7,7 +7,6 @@ import LoseGame from "./LoseGame.jsx";
 import { dropIn } from "../utils/Animations.js";
 
 function Modal({
-  xp,
   level,
   xpGain,
   streak,
@@ -28,7 +27,6 @@ function Modal({
       >
         {modalType === "win" ? (
           <WinGame
-            xp={xp}
             level={level}
             xpGain={xpGain}
             streak={streak}
@@ -43,11 +41,11 @@ function Modal({
         )}
         {modalType === "intro" ? (
           <button className="modal-btn text-med" onClick={handleModalClick}>
-            Play Now
+            Play Now!
           </button>
         ) : (
           <button className="modal-btn text-med" onClick={handleModalClick}>
-            Play Again
+            Play Again!
           </button>
         )}
       </motion.div>
