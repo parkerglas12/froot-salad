@@ -63,6 +63,22 @@
   border-radius: 0.25rem;
 }
 
+.btn {
+  border: none;
+  background-color: var(--btn-color);
+  text-align: center;
+  color: var(--black);
+  text-decoration: none;
+  outline: none;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.bold {
+  font-weight: 600;
+  font-style: italic;
+}
+
 .max-cols {
   grid-column: -1 / 1;
   text-align: center;
@@ -78,6 +94,10 @@
 
 .m1 {
   margin-bottom: 1rem;
+}
+
+.m2 {
+  margin-top: 1rem;
 }
 
 .green {
@@ -236,12 +256,84 @@
   gap: 0.5rem;
 }
 
-/* HOW TO LAYOUT */
-.howto-container {
+/* COLLECTION LAYOUT*/
+.collection-container {
+  flex-direction: column;
+  min-height: 75vh;
+  padding-bottom: 2.5rem;
+}
+
+.collection-container .collection-layout {
+  margin-top: max(2.5vw, 1.5rem);
+}
+
+.collection-container .collection-note {
+  width: clamp(300px, 85vw, 700px);
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.collection-container .collection-layout .collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+  gap: 0.35rem;
+  width: clamp(300px, 85vw, 700px);
+  margin-top: 0.5rem;
+}
+
+.collection-container .collection-layout .machines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.35rem;
+  width: clamp(300px, 85vw, 700px);
+  margin-top: 0.5rem;
+}
+
+.collection-container .collection-layout .collection-item {
+  padding: 0 0.5rem;
+  background-color: var(--btn-color);
+  border-radius: 0.25rem;
+}
+
+.collection-container .collection-layout .machine-item {
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem;
+  background-color: var(--btn-color);
+  border-radius: 0.25rem;
+}
+
+.collection-container .collection-layout .machine-item-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.15rem;
+  width: 100%;
+}
+
+.collection-container .collection-layout .collection-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--dark-green);
+}
+
+.collection-container .collection-layout .machine-item-info .flex-center {
+  gap: 0.15rem;
+}
+
+.collection-container .collection-layout .machine-item img {
+  width: clamp(75px, 75%, 150px);
+}
+
+.collection-container .collection-layout .collection-froot {
+  width: clamp(25px, 85%, 50px);
+}
+
+/* INFORMATION LAYOUT*/
+.information-container {
   min-height: 75vh;
 }
 
-.howto-container .howto-layout {
+.information-container .information-layout {
   flex-direction: column;
   gap: 0.75rem;
   width: clamp(300px, 85vw, 700px);
@@ -249,21 +341,31 @@
   padding-bottom: 1.5rem;
 }
 
-.howto-container .howto-layout .example-image {
+.information-container .information-layout .example-image {
   display: flex;
   width: clamp(275px, 100%, 425px);
   margin: 0.75rem 0;
-  border-bottom: 0.1rem #111 solid;
-  border-left: 0.1rem #111 solid;
+  border-bottom: 0.1rem var(--black) solid;
+  border-left: 0.1rem var(--black) solid;
 }
 
-.howto-container .howto-layout .effect {
+.information-container .information-layout .contact-btn {
+  width: clamp(200px, 50%, 225px);
+  margin: 0.25rem 0 1rem 0;
+  padding: 0.15rem 1rem;
+}
+
+.information-container .information-layout .contact-btn .linkedin-icon {
+  width: clamp(25px, 25%, 50px);
+}
+
+.information-container .information-layout .effect {
   width: 100%;
   padding: 0.5rem;
   text-align: center;
 }
 
-.howto-container .howto-layout .effect.small {
+.information-container .information-layout .effect.small {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
   grid-template-rows: 1fr 1fr;
@@ -271,25 +373,25 @@
   width: clamp(300px, 85vw, 650px);
 }
 
-.howto-container .howto-layout .text-sm {
+.information-container .information-layout .text-sm {
   width: 100%;
   text-align: left;
 }
 
-.howto-container .howto-layout .example-container {
+.information-container .information-layout .example-container {
   display: flex;
   align-items: center;
 }
 
-.howto-container .howto-layout .example-container .example-froots {
+.information-container .information-layout .example-container .example-froots {
   display: flex;
   flex-shrink: 2.5;
 }
 
-.howto-container .howto-layout .example-container .grid-item {
+.information-container .information-layout .example-container .grid-item {
   width: clamp(30px, 45%, 50px);
   margin: 0 0.25rem;
-  border: 0.1rem #111 solid;
+  border: 0.1rem var(--black) solid;
 }
 
 /* MODAL LAYOUT*/
@@ -352,13 +454,6 @@
 .modal-container .modal .modal-btn {
   margin-top: 0.25rem;
   padding: 0.75rem 1rem;
-  border: none;
-  background-color: var(--btn-color);
-  text-align: center;
-  color: var(--black);
-  outline: none;
-  border-radius: 0.25rem;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 /* INTRO MODAL LAYOUT*/
@@ -380,7 +475,7 @@
   flex-shrink: 0;
   width: clamp(35px, 45%, 45px);
   margin-right: 0.25rem;
-  border: 0.1rem solid #111;
+  border: 0.1rem solid var(--black);
 }
 
 /* HOVER EFFECTS */
@@ -390,7 +485,13 @@
   transform: scale(1.05);
 }
 
+.collection-container .collection-layout .collection-btn:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
 .keyboard-container .froot-key.clickable:hover,
+.information-container .information-layout .contact-btn:hover,
 .modal-container .modal .modal-btn:hover {
   cursor: pointer;
   background-color: var(--btn-hover-color);

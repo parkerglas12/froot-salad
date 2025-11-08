@@ -2,7 +2,7 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
 function HowTo() {
   return (
-    <section className="howto-layout flex-center">
+    <>
       <h2 className="heading effect">How To Play</h2>
       <p className="text-sm">
         Your goal is to guess a hidden combination of 8 froots in 6 guesses.
@@ -18,25 +18,25 @@ function HowTo() {
         </div>
         <div className="grid-item flex-center yellow">
           <img src="blueberry.webp" alt="blueberry" />
-          <ChevronsRight className="icon" size={20} />
+          <ChevronsRight className="icon" size={18} />
         </div>
         <div className="grid-item flex-center red">
           <img src="grape.webp" alt="grape" />
         </div>
         <div className="grid-item flex-center yellow">
           <img src="raspberry.webp" alt="raspberry" />
-          <ChevronsLeft className="icon" size={20} />
+          <ChevronsLeft className="icon" size={18} />
         </div>
         <div className="grid-item flex-center green">
-          <img src="pineapple.webp" alt="" />
+          <img src="pineapple.webp" alt="pineapple" />
         </div>
         <div className="grid-item flex-center yellow">
           <img src="peach.webp" alt="peach" />
-          <ChevronsRight className="icon" size={20} />
+          <ChevronsRight className="icon" size={18} />
         </div>
         <div className="grid-item flex-center yellow">
           <img src="watermelon.webp" alt="watermelon" />
-          <ChevronsLeft className="icon" size={20} />
+          <ChevronsLeft className="icon" size={18} />
         </div>
         <div className="grid-item flex-center red">
           <img src="pear.webp" alt="pear" />
@@ -49,7 +49,7 @@ function HowTo() {
               <img src="apple.webp" alt="apple" />
             </div>
             <div className="grid-item flex-center green">
-              <img src="pineapple.webp" alt="" />
+              <img src="pineapple.webp" alt="pineapple" />
             </div>
           </div>
           <p className="text-sm">Correct position</p>
@@ -92,7 +92,7 @@ function HowTo() {
           <p className="text-sm">In solution — move right</p>
         </div>
       </div>
-    </section>
+    </>
   );
 }
 

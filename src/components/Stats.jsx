@@ -1,4 +1,3 @@
-import { progress } from "framer-motion";
 import {
   Ban,
   Star,

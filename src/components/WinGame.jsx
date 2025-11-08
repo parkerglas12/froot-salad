@@ -57,7 +57,6 @@ function WinGame({
       <motion.div
         className="modal-froots"
         variants={frootParent}
-        initial="hidden"
         animate="visible"
       >
         {solution.map((froot) => (

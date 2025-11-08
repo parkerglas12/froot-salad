@@ -1,4 +1,9 @@
-import { Home, CircleQuestionMark, ChartColumnIncreasing } from "lucide-react";
+import {
+  Home,
+  ShoppingBasket,
+  ChartNoAxesCombined,
+  CircleQuestionMark,
+} from "lucide-react";
 
 function Navbar({ currentPage, handlePageChange }) {
   return (
@@ -10,15 +15,20 @@ function Navbar({ currentPage, handlePageChange }) {
           color={"#111"}
           onClick={() => handlePageChange("home")}
         />
-        <ChartColumnIncreasing
+        <ChartNoAxesCombined
           className={`btn ${currentPage === "stats" ? "active" : ""}`}
           color={"#111"}
           onClick={() => handlePageChange("stats")}
         />
-        <CircleQuestionMark
-          className={`btn ${currentPage === "howto" ? "active" : ""}`}
+        <ShoppingBasket
+          className={`btn ${currentPage === "collection" ? "active" : ""}`}
           color={"#111"}
-          onClick={() => handlePageChange("howto")}
+          onClick={() => handlePageChange("collection")}
+        />
+        <CircleQuestionMark
+          className={`btn ${currentPage === "information" ? "active" : ""}`}
+          color={"#111"}
+          onClick={() => handlePageChange("information")}
         />
       </nav>
     </header>

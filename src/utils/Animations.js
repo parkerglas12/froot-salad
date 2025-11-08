@@ -30,13 +30,14 @@ export const frootParent = {
 };
 
 export const frootChild = {
-  hidden: { scale: 0.75 },
   visible: {
-    scale: 1,
+    scale: [1, 1.1, 1],
+    rotate: [0, 8, -8, 0],
+    y: [0, -3, 0],
     transition: {
-      duration: 0.5,
+      duration: 1.5,
       repeat: Infinity,
-      repeatType: "reverse",
+      ease: "easeInOut",
     },
   },
 };

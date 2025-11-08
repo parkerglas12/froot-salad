@@ -7,11 +7,12 @@ import { AnimatePresence } from "framer-motion";
 import ReactGA from "react-ga4";
 
 import Grid from "./components/Grid.jsx";
-import HowTo from "./components/HowTo.jsx";
 import Stats from "./components/Stats.jsx";
 import Modal from "./components/Modal.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Keyboard from "./components/Keyboard.jsx";
+import Collection from "./components/Collection.jsx";
+import Information from "./components/Information.jsx";
 
 import {
   rows,
@@ -42,6 +43,27 @@ function App() {
   const [isLevelingUp, setIsLevelingUp] = useState(false);
 
   // LOCAL STORAGE STATES
+  const [frootCollection, setFrootCollection] = useState(() => {
+    const storedValue = localStorage.getItem("frootCollection");
+    return storedValue
+      ? JSON.parse(storedValue)
+      : {
+          apple: 0,
+          banana: 0,
+          watermelon: 0,
+          strawberry: 0,
+          blueberry: 0,
+          kiwi: 0,
+          orange: 0,
+          pineapple: 0,
+          grape: 0,
+          cherry: 0,
+          pear: 0,
+          raspberry: 0,
+          lemon: 0,
+          peach: 0,
+        };
+  });
   const [gamesPlayed, setGamesPlayed] = useState(() => {
     const storedValue = localStorage.getItem("gamesPlayed");
     return storedValue ? JSON.parse(storedValue) : 0;
@@ -84,6 +106,10 @@ function App() {
   });
 
   // UPDATING LOCAL STORAGE
+  useEffect(() => {
+    localStorage.setItem("frootCollection", JSON.stringify(frootCollection));
+  }, [frootCollection]);
+
   useEffect(() => {
     localStorage.setItem("gamesPlayed", JSON.stringify(gamesPlayed));
   }, [gamesPlayed]);
@@ -186,6 +212,25 @@ function App() {
     setCurrentPage(page);
   }
 
+  function makeFrootItem(amount, xpGain) {
+    if (Object.values(frootCollection).every((count) => count >= amount)) {
+      setFrootCollection((prev) =>
+        Object.keys(prev).reduce((acc, key) => {
+          acc[key] = prev[key] - amount;
+          return acc;
+        }, {})
+      );
+      const newXp = xp + xpGain;
+      setXp(newXp);
+      let remainingLevelUp = levelUp;
+      while (newXp >= remainingLevelUp) {
+        remainingLevelUp *= 2;
+        setLevelUp((prev) => prev * 2);
+        setLevel((prev) => prev + 1);
+      }
+    }
+  }
+
   function handleKeyPress(froot) {
     const firstNullIdx = gridArray.findIndex((item) => item === null); // Find the index of the first null element
     if (
@@ -265,11 +310,21 @@ function App() {
           setXpGain(xpGained);
           setModalType("win");
           setWins((prev) => prev + 1);
+          setFrootCollection((prev) =>
+            Object.keys(prev).reduce((acc, key) => {
+              acc[key] = prev[key] + (solution.includes(key) ? 1 : 0);
+              return acc;
+            }, {})
+          );
           setXp(newXp);
+          let remainingLevelUp = levelUp;
           if (newXp >= levelUp) {
+            setIsLevelingUp(true);
+          }
+          while (newXp >= remainingLevelUp) {
+            remainingLevelUp *= 2;
             setLevelUp((prev) => prev * 2);
             setLevel((prev) => prev + 1);
-            setIsLevelingUp(true);
           }
           setStreak(newStreak);
           if (streak + 1 > maxStreak) {
@@ -345,11 +400,20 @@ function App() {
             levelUp={levelUp}
             maxStreak={maxStreak}
             gamesPlayed={gamesPlayed}
+            frootCollection={frootCollection}
           />
         </main>
+      ) : currentPage === "information" ? (
+        <main className="information-container flex-center">
+          <Information />
+        </main>
       ) : (
-        <main className="howto-container flex-center">
-          <HowTo />
+        <main className="collection-container flex-center">
+          <Collection
+            level={level}
+            makeFrootItem={makeFrootItem}
+            frootCollection={frootCollection}
+          />
         </main>
       )}
     </>

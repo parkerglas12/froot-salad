@@ -14,7 +14,7 @@ function Grid({ gridArray, fullResults, currentRound }) {
           }}
           transition={{ duration: 0.5 }}
         >
-          <ChevronsLeft className="icon" size={20} />
+          <ChevronsLeft className="icon" size={18} />
         </motion.div>
       );
     } else if (type === "right") {
@@ -25,7 +25,7 @@ function Grid({ gridArray, fullResults, currentRound }) {
           }}
           transition={{ duration: 0.5 }}
         >
-          <ChevronsRight className="icon" size={20} />
+          <ChevronsRight className="icon" size={18} />
         </motion.div>
       );
     }

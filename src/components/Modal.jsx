@@ -40,11 +40,11 @@ function Modal({
           <Intro />
         )}
         {modalType === "intro" ? (
-          <button className="modal-btn text-med" onClick={handleModalClick}>
+          <button className="modal-btn btn text-med" onClick={handleModalClick}>
             Play Now!
           </button>
         ) : (
-          <button className="modal-btn text-med" onClick={handleModalClick}>
+          <button className="modal-btn btn text-med" onClick={handleModalClick}>
             Play Again!
           </button>
         )}

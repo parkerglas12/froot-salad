@@ -25,14 +25,14 @@ function Intro() {
         <div className="intro-container">
           <div className="grid-item flex-center yellow">
             <img src="blueberry.webp" alt="blueberry" />
-            <ChevronsRight className="icon" size={20} />
+            <ChevronsRight className="icon" size={18} />
           </div>
           <p className="text-sm">Move right</p>
         </div>
         <div className="intro-container">
           <div className="grid-item flex-center yellow">
             <img src="kiwi.webp" alt="kiwi" />
-            <ChevronsLeft className="icon" size={20} />
+            <ChevronsLeft className="icon" size={18} />
           </div>
           <p className="text-sm">Move left</p>
         </div>
