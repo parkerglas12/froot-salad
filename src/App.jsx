@@ -6,12 +6,15 @@ import { AnimatePresence } from "framer-motion";
 
 import ReactGA from "react-ga4";
 
+import { Temporal } from "@js-temporal/polyfill";
+
 import Grid from "./components/Grid.jsx";
 import Stats from "./components/Stats.jsx";
 import Modal from "./components/Modal.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Keyboard from "./components/Keyboard.jsx";
-import Collection from "./components/Collection.jsx";
+import Inventory from "./components/Inventory.jsx";
+import MiniModal from "./components/MiniModal.jsx";
 import Information from "./components/Information.jsx";
 
 import {
@@ -36,6 +39,7 @@ function App() {
   const [notInPuzzle, setNotInPuzzle] = useState([]);
   const [solution, setSolution] = useState(getRandomSalad(froots));
   const [showModal, setShowModal] = useState(false);
+  const [showMiniModal, setShowMiniModal] = useState(false);
   const [modalType, setModalType] = useState("intro");
   const [prevSolution, setPrevSolution] = useState([]);
   const [currentPage, setCurrentPage] = useState("home");
@@ -62,6 +66,15 @@ function App() {
           raspberry: 0,
           lemon: 0,
           peach: 0,
+        };
+  });
+  const [dateInformation, setDateInformation] = useState(() => {
+    const storedValue = localStorage.getItem("dateInformation");
+    return storedValue
+      ? JSON.parse(storedValue)
+      : {
+          streak: 0,
+          lastGame: Temporal.Now.plainDateISO(),
         };
   });
   const [gamesPlayed, setGamesPlayed] = useState(() => {
@@ -109,6 +122,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("frootCollection", JSON.stringify(frootCollection));
   }, [frootCollection]);
+
+  useEffect(() => {
+    localStorage.setItem("dateInformation", JSON.stringify(dateInformation));
+  }, [dateInformation]);
 
   useEffect(() => {
     localStorage.setItem("gamesPlayed", JSON.stringify(gamesPlayed));
@@ -166,6 +183,14 @@ function App() {
       setShowModal(true);
       setModalType("intro");
     }
+    const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
+    const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
+    if (inBetween > 1) {
+      setDateInformation({
+        streak: 0,
+        lastGame: Temporal.Now.plainDateISO(),
+      });
+    }
   }, []);
 
   // FUNCTIONS
@@ -212,16 +237,43 @@ function App() {
     setCurrentPage(page);
   }
 
-  function makeFrootItem(amount, xpGain) {
-    if (Object.values(frootCollection).every((count) => count >= amount)) {
+  function updateDailyStreak() {
+    const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
+    const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
+    if (
+      (inBetween === 1 && dateInformation.streak >= 1) ||
+      (inBetween === 0 && dateInformation.streak === 0)
+    ) {
+      const newStreak = dateInformation.streak + 1;
+      setDateInformation(() => ({
+        streak: newStreak,
+        lastGame: Temporal.Now.plainDateISO(),
+      }));
+    }
+  }
+
+  function makeFrootItem(amount, xpGain, frootArray) {
+    const hasEnough = frootArray.every(
+      (froot) => frootCollection[froot] >= amount
+    );
+    if (hasEnough) {
       setFrootCollection((prev) =>
         Object.keys(prev).reduce((acc, key) => {
-          acc[key] = prev[key] - amount;
+          if (frootArray.includes(key)) {
+            acc[key] = prev[key] - amount;
+          } else {
+            acc[key] = prev[key];
+          }
           return acc;
         }, {})
       );
       const newXp = xp + xpGain;
       setXp(newXp);
+      setXpGain(xpGain);
+      setShowMiniModal(true);
+      setTimeout(() => {
+        setShowMiniModal(false);
+      }, 2000);
       let remainingLevelUp = levelUp;
       while (newXp >= remainingLevelUp) {
         remainingLevelUp *= 2;
@@ -232,16 +284,16 @@ function App() {
   }
 
   function handleKeyPress(froot) {
-    const firstNullIdx = gridArray.findIndex((item) => item === null); // Find the index of the first null element
+    const firstNullIdx = gridArray.findIndex((item) => item === null);
     if (
       firstNullIdx < currentRound * cols &&
       !currentAttempt.includes(froot) &&
       !notInPuzzle.includes(froot)
     ) {
       setGridArray((prev) => {
-        const newArray = [...prev]; // Create a copy of the previous array
-        if (firstNullIdx === -1) return newArray; // If no null found, return the original array
-        newArray[firstNullIdx] = froot; // Update the first null position with the new froot
+        const newArray = [...prev];
+        if (firstNullIdx === -1) return newArray;
+        newArray[firstNullIdx] = froot;
         return newArray;
       });
       setCurrentAttempt((prev) => {
@@ -306,7 +358,7 @@ function App() {
         setTimeout(() => {
           const newStreak = streak + 1;
           const xpGained = 100 + newStreak * 10;
-          const newXp = xp + 100 + newStreak * 10;
+          const newXp = xp + xpGained;
           setXpGain(xpGained);
           setModalType("win");
           setWins((prev) => prev + 1);
@@ -340,6 +392,7 @@ function App() {
           gameReset();
         }, 2000);
       }
+      updateDailyStreak();
       setResult(newResult);
       setCurrentRound(newRound);
       setFullResults(newFullResults);
@@ -372,6 +425,9 @@ function App() {
           </>
         )}
       </AnimatePresence>
+      <AnimatePresence>
+        {showMiniModal && <MiniModal xpGain={xpGain} />}
+      </AnimatePresence>
       <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
       {currentPage === "home" ? (
         <main className="main-container flex-center">
@@ -400,7 +456,7 @@ function App() {
             levelUp={levelUp}
             maxStreak={maxStreak}
             gamesPlayed={gamesPlayed}
-            frootCollection={frootCollection}
+            dateInformation={dateInformation}
           />
         </main>
       ) : currentPage === "information" ? (
@@ -408,8 +464,8 @@ function App() {
           <Information />
         </main>
       ) : (
-        <main className="collection-container flex-center">
-          <Collection
+        <main className="inventory-container flex-center">
+          <Inventory
             level={level}
             makeFrootItem={makeFrootItem}
             frootCollection={frootCollection}

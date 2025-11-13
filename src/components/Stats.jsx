@@ -3,9 +3,10 @@ import {
   Star,
   Medal,
   Flame,
+  Puzzle,
   Trophy,
   Gamepad2,
-  Lightbulb,
+  CalendarDays,
   FlameKindling,
 } from "lucide-react";
 
@@ -19,6 +20,7 @@ function Stats({
   levelUp,
   maxStreak,
   gamesPlayed,
+  dateInformation,
 }) {
   return (
     <section className="stats-main">
@@ -49,7 +51,7 @@ function Stats({
           <h2 className="text-lg">Guesses</h2>
           <div className="stats-text flex-center">
             <h2 className="text-med">{guesses}</h2>
-            <Lightbulb color={"#467805"} />
+            <Puzzle color={"#4bb00f"} />
           </div>
         </div>
         <div className="stats-item flex-center br">
@@ -91,6 +93,13 @@ function Stats({
           <div className="stats-text flex-center">
             <h2 className="text-med">{xp}</h2>
             <Star color={"#deb203"} />
+          </div>
+        </div>
+        <div className="stats-item flex-center br">
+          <h2 className="text-lg">Daily Streak</h2>
+          <div className="stats-text flex-center">
+            <h2 className="text-med">{dateInformation.streak}</h2>
+            <CalendarDays color={"#111"} />
           </div>
         </div>
       </div>
