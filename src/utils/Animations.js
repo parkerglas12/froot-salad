@@ -25,6 +25,7 @@ export const slideIn = {
   hidden: {
     x: "-100vw",
     opacity: 0,
+    rotate: -180,
   },
   visible: {
     x: 0,
@@ -34,12 +35,35 @@ export const slideIn = {
       damping: 25,
       stiffness: 400,
     },
+    rotate: 0,
   },
   exit: {
     x: "100vw",
     opacity: 0,
     transition: {
       duration: 0.4,
+    },
+    rotate: 180,
+  },
+};
+
+export const fadeIn = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      type: "tween",
+      duration: 0.2,
+      ease: "easeInOut",
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+      ease: "easeInOut",
     },
   },
 };

@@ -4,9 +4,9 @@ import Confetti from "react-confetti";
 
 import { AnimatePresence } from "framer-motion";
 
-import ReactGA from "react-ga4";
-
 import { Temporal } from "@js-temporal/polyfill";
+
+import ReactGA from "react-ga4";
 
 import Grid from "./components/Grid.jsx";
 import Stats from "./components/Stats.jsx";
@@ -14,6 +14,7 @@ import Modal from "./components/Modal.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Keyboard from "./components/Keyboard.jsx";
 import Inventory from "./components/Inventory.jsx";
+import CopyModal from "./components/CopyModal.jsx";
 import MiniModal from "./components/MiniModal.jsx";
 import Information from "./components/Information.jsx";
 
@@ -21,8 +22,11 @@ import {
   rows,
   cols,
   froots,
+  identifier,
   checkAttempt,
   getRandomSalad,
+  createShareGrid,
+  doubleXpThreshold,
 } from "./utils/Helpers.js";
 
 function App() {
@@ -40,11 +44,14 @@ function App() {
   const [solution, setSolution] = useState(getRandomSalad(froots));
   const [showModal, setShowModal] = useState(false);
   const [showMiniModal, setShowMiniModal] = useState(false);
+  const [showCopyModal, setShowCopyModal] = useState(false);
   const [modalType, setModalType] = useState("intro");
   const [prevSolution, setPrevSolution] = useState([]);
   const [currentPage, setCurrentPage] = useState("home");
   const [xpGain, setXpGain] = useState(0);
+  const [xpBoost, setXpBoost] = useState(1);
   const [isLevelingUp, setIsLevelingUp] = useState(false);
+  const [shareGrid, setShareGrid] = useState([]);
 
   // LOCAL STORAGE STATES
   const [frootCollection, setFrootCollection] = useState(() => {
@@ -77,6 +84,20 @@ function App() {
           lastGame: Temporal.Now.plainDateISO(),
         };
   });
+  const [guessDistributionData, setGuessDistributionData] = useState(() => {
+    const storedValue = localStorage.getItem("guessDistributionData");
+    return storedValue
+      ? JSON.parse(storedValue)
+      : [
+          { name: "1st", count: 0 },
+          { name: "2nd", count: 0 },
+          { name: "3rd", count: 0 },
+          { name: "4th", count: 0 },
+          { name: "5th", count: 0 },
+          { name: "6th", count: 0 },
+        ];
+  });
+
   const [gamesPlayed, setGamesPlayed] = useState(() => {
     const storedValue = localStorage.getItem("gamesPlayed");
     return storedValue ? JSON.parse(storedValue) : 0;
@@ -126,6 +147,13 @@ function App() {
   useEffect(() => {
     localStorage.setItem("dateInformation", JSON.stringify(dateInformation));
   }, [dateInformation]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "guessDistributionData",
+      JSON.stringify(guessDistributionData)
+    );
+  }, [guessDistributionData]);
 
   useEffect(() => {
     localStorage.setItem("gamesPlayed", JSON.stringify(gamesPlayed));
@@ -182,6 +210,9 @@ function App() {
     if (!introModalShown) {
       setShowModal(true);
       setModalType("intro");
+    } else {
+      setShowModal(true);
+      setModalType("welcome");
     }
     const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
     const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
@@ -190,6 +221,9 @@ function App() {
         streak: 0,
         lastGame: Temporal.Now.plainDateISO(),
       });
+    }
+    if (dateInformation.streak > doubleXpThreshold) {
+      setXpBoost(2);
     }
   }, []);
 
@@ -233,6 +267,32 @@ function App() {
     }
   }
 
+  async function copyToClipboard() {
+    await navigator.clipboard.writeText(
+      `My Froot Salad Solution:\n${shareGrid}Play Now: https://frootsalad.com`
+    );
+    setShowCopyModal(true);
+    setTimeout(() => {
+      setShowCopyModal(false);
+    }, 1250);
+  }
+
+  function updateData(guessNum) {
+    setGuessDistributionData((prev) =>
+      prev.map((item) =>
+        item.name === identifier[guessNum]
+          ? { ...item, count: item.count + 1 }
+          : item
+      )
+    );
+  }
+
+  function checkEnoughIngredients(recipe, amount) {
+    return recipe.every((froot) => frootCollection[froot] >= amount)
+      ? true
+      : false;
+  }
+
   function handlePageChange(page) {
     setCurrentPage(page);
   }
@@ -249,6 +309,9 @@ function App() {
         streak: newStreak,
         lastGame: Temporal.Now.plainDateISO(),
       }));
+      if (newStreak > doubleXpThreshold) {
+        setXpBoost(2);
+      }
     }
   }
 
@@ -354,10 +417,11 @@ function App() {
         newResult.length === cols
       ) {
         setRoundGuesses(newRound - 1);
+        updateData(newRound - 1);
         setGuesses((prev) => prev + newRound - 1);
         setTimeout(() => {
           const newStreak = streak + 1;
-          const xpGained = 100 + newStreak * 10;
+          const xpGained = (100 + newStreak * 10) * xpBoost;
           const newXp = xp + xpGained;
           setXpGain(xpGained);
           setModalType("win");
@@ -388,10 +452,12 @@ function App() {
         setTimeout(() => {
           setModalType("loss");
           setLosses((prev) => prev + 1);
+          setGuesses((prev) => prev + rows);
           setStreak(0);
           gameReset();
         }, 2000);
       }
+      setShareGrid(createShareGrid(newFullResults));
       updateDailyStreak();
       setResult(newResult);
       setCurrentRound(newRound);
@@ -409,10 +475,13 @@ function App() {
               level={level}
               xpGain={xpGain}
               streak={streak}
+              shareGrid={shareGrid}
               modalType={modalType}
               solution={prevSolution}
               roundGuesses={roundGuesses}
               isLevelingUp={isLevelingUp}
+              dateInformation={dateInformation}
+              copyToClipboard={copyToClipboard}
               handleModalClick={handleModalClick}
             />
             {modalType === "win" && (
@@ -428,6 +497,7 @@ function App() {
       <AnimatePresence>
         {showMiniModal && <MiniModal xpGain={xpGain} />}
       </AnimatePresence>
+      <AnimatePresence>{showCopyModal && <CopyModal />}</AnimatePresence>
       <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
       {currentPage === "home" ? (
         <main className="main-container flex-center">
@@ -457,6 +527,7 @@ function App() {
             maxStreak={maxStreak}
             gamesPlayed={gamesPlayed}
             dateInformation={dateInformation}
+            guessDistributionData={guessDistributionData}
           />
         </main>
       ) : currentPage === "information" ? (
@@ -469,6 +540,7 @@ function App() {
             level={level}
             makeFrootItem={makeFrootItem}
             frootCollection={frootCollection}
+            checkEnoughIngredients={checkEnoughIngredients}
           />
         </main>
       )}

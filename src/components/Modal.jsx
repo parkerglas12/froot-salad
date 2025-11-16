@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 
 import Intro from "./Intro.jsx";
 import WinGame from "./WinGame.jsx";
+import Welcome from "./Welcome.jsx";
 import LoseGame from "./LoseGame.jsx";
 
 import { dropIn } from "../utils/Animations.js";
@@ -10,12 +11,32 @@ function Modal({
   level,
   xpGain,
   streak,
+  shareGrid,
   modalType,
   solution,
   roundGuesses,
   isLevelingUp,
+  dateInformation,
+  copyToClipboard,
   handleModalClick,
 }) {
+  const modals = {
+    win: (
+      <WinGame
+        level={level}
+        xpGain={xpGain}
+        streak={streak}
+        solution={solution}
+        shareGrid={shareGrid}
+        isLevelingUp={isLevelingUp}
+        roundGuesses={roundGuesses}
+        copyToClipboard={copyToClipboard}
+      />
+    ),
+    loss: <LoseGame solution={solution} />,
+    intro: <Intro />,
+    welcome: <Welcome dateInformation={dateInformation} />,
+  };
   return (
     <div className="modal-container flex-center">
       <motion.div
@@ -25,21 +46,8 @@ function Modal({
         animate="visible"
         variants={dropIn}
       >
-        {modalType === "win" ? (
-          <WinGame
-            level={level}
-            xpGain={xpGain}
-            streak={streak}
-            solution={solution}
-            isLevelingUp={isLevelingUp}
-            roundGuesses={roundGuesses}
-          />
-        ) : modalType === "loss" ? (
-          <LoseGame solution={solution} />
-        ) : (
-          <Intro />
-        )}
-        {modalType === "intro" ? (
+        {modals[modalType]}
+        {modalType === "intro" || modalType === "welcome" ? (
           <button className="modal-btn btn text-med" onClick={handleModalClick}>
             Play Now!
           </button>

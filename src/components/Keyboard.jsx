@@ -12,8 +12,8 @@ function Keyboard({
   return (
     <section className="keyboard-container">
       {froots.map((froot) => (
-        <div
-          className={`froot-key flex-center ${
+        <button
+          className={`froot-key btn flex-center ${
             !notInPuzzle.includes(froot) ? "clickable" : "absent"
           } ${
             inSolution.includes(froot)
@@ -22,24 +22,26 @@ function Keyboard({
               ? "yellow"
               : ""
           }`}
-          onClick={() => handleKeyPress(froot)}
+          onPointerDown={() => handleKeyPress(froot)}
           key={froot}
         >
           <img src={`${froot}.webp`} alt={froot} />
-        </div>
+        </button>
       ))}
-      <div
-        className="froot-key flex-center max-span clickable delete-key"
-        onClick={() => handleOtherKeys("delete")}
+      <button
+        className="delete-key froot-key btn flex-center max-span clickable"
+        onPointerDown={() => handleOtherKeys("delete")}
+        aria-label="Delete Button"
       >
         <Delete size={27} color="#111" />
-      </div>
-      <div
-        className="froot-key flex-center max-span clickable enter-key"
-        onClick={() => handleOtherKeys("enter")}
+      </button>
+      <button
+        className="enter-key froot-key btn flex-center max-span clickable"
+        onPointerDown={() => handleOtherKeys("enter")}
+        aria-label="Enter Button"
       >
         <CircleCheckBig size={27} color="#111" />
-      </div>
+      </button>
     </section>
   );
 }

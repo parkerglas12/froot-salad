@@ -1,5 +1,6 @@
 export const rows = 6;
 export const cols = 8;
+export const doubleXpThreshold = 5;
 export const froots = [
   "apple",
   "banana",
@@ -16,9 +17,35 @@ export const froots = [
   "lemon",
   "peach",
 ];
+const rewardWords = [
+  "Awesome!",
+  "Nice!",
+  "Great!",
+  "Stellar!",
+  "Sweet!",
+  "Fantastic!",
+  "Peachy!",
+];
 export const url = "https://frootsalad.com";
-export const startingMsg =
-  "I've been playing this cute and cozy puzzle game called Froot Salad🍇. It’s like Wordle + Mastermind and sooo addicting.";
+const gridEmojis = {
+  correct: "🟩",
+  left: "⬅️",
+  right: "➡️",
+  absent: "🟥",
+};
+export const identifier = {
+  1: "1st",
+  2: "2nd",
+  3: "3rd",
+  4: "4th",
+  5: "5th",
+  6: "6th",
+};
+
+export function getRandomWord() {
+  const randomIndex = Math.floor(Math.random() * rewardWords.length);
+  return rewardWords[randomIndex];
+}
 
 export function getRandomSalad(frootArray) {
   return frootArray.toSorted(() => 0.5 - Math.random()).slice(0, cols);
@@ -38,4 +65,16 @@ export function checkAttempt(attempt, solution) {
     }
   });
   return result;
+}
+
+export function createShareGrid(guesses) {
+  const shareGrid = guesses.map((result, index) => {
+    const emoji = gridEmojis[result];
+    if (index % cols === cols - 1) {
+      return emoji + "\n";
+    } else {
+      return emoji;
+    }
+  });
+  return shareGrid.toString().replaceAll(",", "");
 }

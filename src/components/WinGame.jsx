@@ -11,9 +11,9 @@ import {
 
 import { motion } from "framer-motion";
 
-import { Flame, MoveRight } from "lucide-react";
+import { Copy, Flame, MoveRight } from "lucide-react";
 
-import { url, startingMsg } from "../utils/Helpers.js";
+import { url } from "../utils/Helpers.js";
 
 import { frootParent, frootChild } from "../utils/Animations.js";
 
@@ -22,12 +22,13 @@ function WinGame({
   xpGain,
   streak,
   solution,
+  shareGrid,
   roundGuesses,
   isLevelingUp,
+  copyToClipboard,
 }) {
-  const fullMsg =
-    startingMsg +
-    ` I just won in ${roundGuesses} guesses, think you can top that?\nPlay here: `;
+  const fullMsg = `I solved this cozy logic puzzle called Froot Salad in just ${roundGuesses} tries!\n${shareGrid}Use the clues, choose the correct froots, and see if you can make a perfect salad.\nPlay now:`;
+
   return (
     <>
       <h2 className="heading">Sweet! You Won!</h2>
@@ -68,7 +69,16 @@ function WinGame({
           ></motion.img>
         ))}
       </motion.div>
+      <p className="text-sm social-text bold">
+        Copy your salad or share it straight to social media!
+      </p>
       <div className="social-media">
+        <Copy
+          onClick={copyToClipboard}
+          className="copy-icon"
+          size={30}
+          color={"#111"}
+        />
         <TwitterShareButton url={url} title={fullMsg}>
           <XIcon size={32} round />
         </TwitterShareButton>

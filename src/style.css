@@ -108,8 +108,16 @@
   background-color: var(--green);
 }
 
+.light-green {
+  background-color: rgba(0, 255, 0, 0.25);
+}
+
 .red {
   background-color: var(--red);
+}
+
+.light-red {
+  background-color: rgba(255, 0, 0, 0.15);
 }
 
 .yellow {
@@ -176,8 +184,10 @@
 
 .grid-item img {
   width: 95%;
-  height: 95%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 .grid-item .icon {
@@ -225,7 +235,17 @@
 .stats-container .stats-main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 75vh;
+}
+
+.stats-container .stats-main .distribution {
+  flex-direction: column;
+  padding-bottom: 1.5rem;
+}
+
+.stats-container .distribution .effect {
+  width: 100%;
+  text-align: center;
 }
 
 .stats-container .stats-main .stats-grid {
@@ -248,7 +268,7 @@
   border-radius: 0.25rem;
 }
 
-.stats-container .stats-main .stats-text {
+.stats-text {
   gap: 0.5rem;
 }
 
@@ -324,6 +344,10 @@
   transition: transform 0.3s ease;
 }
 
+.inventory-container .inventory-layout .recipe-froots {
+  border-radius: 0.5rem;
+}
+
 .inventory-container .inventory-layout .recipe-froots img {
   width: clamp(40px, 20%, 50px);
 }
@@ -371,11 +395,11 @@
 .information-container .information-layout .contact-btn {
   width: clamp(200px, 50%, 225px);
   margin: 0.25rem 0 1rem 0;
-  padding: 0.15rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .information-container .information-layout .linkedin-icon {
-  width: clamp(25px, 25%, 50px);
+  width: clamp(25px, 25%, 40px);
 }
 
 .information-container .information-layout .example-container {
@@ -389,7 +413,7 @@
 }
 
 .information-container .information-layout .example-container .grid-item {
-  width: clamp(30px, 45%, 50px);
+  width: clamp(30px, 10vw, 50px);
   margin: 0 0.25rem;
   border: 0.1rem var(--black) solid;
 }
@@ -405,6 +429,10 @@
   z-index: 1002;
 }
 
+.modal-container.no-shadow {
+  background-color: transparent;
+}
+
 .modal-container .modal {
   flex-direction: column;
   gap: 0.5rem;
@@ -418,7 +446,14 @@
 
 .modal-container .modal.mini-modal {
   width: fit-content;
-  padding: 1rem 2.5rem;
+  padding: 0.75rem 2.25rem;
+}
+
+.modal-container .modal.copy-modal {
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  background-color: var(--dark-green);
+  border-radius: 0.5rem;
 }
 
 .modal-container .modal.intro {
@@ -430,6 +465,19 @@
   text-align: left;
 }
 
+.modal-container .modal .welcome-stats {
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  gap: 0.5vw;
+  background-color: var(--btn-color);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.modal-container .modal .stats-item {
+  flex-direction: column;
+}
+
 .modal-container .modal .modal-froots {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -439,10 +487,18 @@
   width: 100%;
 }
 
+.modal-container .modal .social-text {
+  text-align: center;
+}
+
 .modal-container .modal .social-media {
   display: flex;
   gap: max(1vw, 0.5rem);
   margin-top: 0.25rem;
+}
+
+.modal-container .modal .copy-icon {
+  transition: transform 0.3s ease;
 }
 
 .modal-container .modal .modal-flex {
@@ -490,7 +546,8 @@
   transform: scale(1.05);
 }
 
-.inventory-container .inventory-layout .item-img:hover {
+.inventory-container .inventory-layout .item-img:hover,
+.modal-container .modal .copy-icon:hover {
   cursor: pointer;
   transform: scale(1.05);
 }

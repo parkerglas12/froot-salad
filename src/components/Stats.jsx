@@ -1,3 +1,6 @@
+import StatsItem from "./StatsItem.jsx";
+import GuessDistribution from "./GuessDistribution.jsx";
+
 import {
   Ban,
   Star,
@@ -21,53 +24,42 @@ function Stats({
   maxStreak,
   gamesPlayed,
   dateInformation,
+  guessDistributionData,
 }) {
   return (
     <section className="stats-main">
       <div className="stats-grid">
         <h2 className="heading effect max-cols">Statistics</h2>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Games</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{gamesPlayed}</h2>
-            <Gamepad2 color={"#111"} />
-          </div>
-        </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Wins</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{wins}</h2>
-            <Trophy color={"#deb203"} />
-          </div>
-        </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Losses</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{losses}</h2>
-            <Ban color={"#e76962"} />
-          </div>
-        </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Guesses</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{guesses}</h2>
-            <Puzzle color={"#4bb00f"} />
-          </div>
-        </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Streak</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{streak}</h2>
-            <Flame color={"#ff8400"} />
-          </div>
-        </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Max Streak</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{maxStreak}</h2>
-            <FlameKindling color={"#ff8400"} />
-          </div>
-        </div>
+        <StatsItem
+          label="Games"
+          value={gamesPlayed}
+          icon={<Gamepad2 color={"#111"} />}
+        />
+        <StatsItem
+          label="Wins"
+          value={wins}
+          icon={<Trophy color={"#deb203"} />}
+        />
+        <StatsItem
+          label="Losses"
+          value={losses}
+          icon={<Ban color={"#e76962"} />}
+        />
+        <StatsItem
+          label="Guesses"
+          value={guesses}
+          icon={<Puzzle color={"#4bb00f"} />}
+        />
+        <StatsItem
+          label="Streak"
+          value={streak}
+          icon={<Flame color={"#ff8400"} />}
+        />
+        <StatsItem
+          label="Max Streak"
+          value={maxStreak}
+          icon={<FlameKindling color={"#ff8400"} />}
+        />
       </div>
       <div className="stats-grid">
         <h2 className="heading effect max-cols">Experience</h2>
@@ -88,20 +80,15 @@ function Stats({
             )}
           </div>
         </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">XP</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{xp}</h2>
-            <Star color={"#deb203"} />
-          </div>
-        </div>
-        <div className="stats-item flex-center br">
-          <h2 className="text-lg">Daily Streak</h2>
-          <div className="stats-text flex-center">
-            <h2 className="text-med">{dateInformation.streak}</h2>
-            <CalendarDays color={"#111"} />
-          </div>
-        </div>
+        <StatsItem label="XP" value={xp} icon={<Star color={"#deb203"} />} />
+        <StatsItem
+          label="Daily Streak"
+          value={dateInformation.streak}
+          icon={<CalendarDays color={"#111"} />}
+        />
+      </div>
+      <div>
+        <GuessDistribution data={guessDistributionData} />
       </div>
     </section>
   );

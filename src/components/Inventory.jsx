@@ -14,7 +14,12 @@ import {
   blueberryJamContent,
 } from "../utils/FrootStand.js";
 
-function Inventory({ level, makeFrootItem, frootCollection }) {
+function Inventory({
+  level,
+  makeFrootItem,
+  frootCollection,
+  checkEnoughIngredients,
+}) {
   return (
     <>
       <section className="inventory-layout">
@@ -46,14 +51,17 @@ function Inventory({ level, makeFrootItem, frootCollection }) {
                   <StandItem
                     content={tropicalSmoothieContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                   <StandItem
                     content={freshSmoothieContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                   <StandItem
                     content={berrySmoothieContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                 </div>
               </>
@@ -73,14 +81,17 @@ function Inventory({ level, makeFrootItem, frootCollection }) {
                   <StandItem
                     content={appleJuiceContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                   <StandItem
                     content={pinkLemonadeContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                   <StandItem
                     content={frootPunchContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                 </div>
               </>
@@ -99,14 +110,17 @@ function Inventory({ level, makeFrootItem, frootCollection }) {
                   <StandItem
                     content={cherryJamContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                   <StandItem
                     content={grapeJellyContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                   <StandItem
                     content={blueberryJamContent}
                     makeFrootItem={makeFrootItem}
+                    checkEnoughIngredients={checkEnoughIngredients}
                   />
                 </div>
               </>
