@@ -6,16 +6,17 @@ function GuessDistribution({ data }) {
       <h2 className="effect heading m1">Guess Distribution</h2>
       <BarChart
         style={{
-          width: "85%",
+          width: "99%",
           maxWidth: "600px",
-          maxHeight: "400px",
-          aspectRatio: 2,
+          maxHeight: "300px",
+          aspectRatio: 1.618,
           margin: "0 auto",
           pointerEvents: "none",
         }}
         responsive
         data={data}
         layout="vertical"
+        margin={{ top: 5, right: 10 }}
       >
         <XAxis
           type="number"
@@ -24,7 +25,7 @@ function GuessDistribution({ data }) {
           axisLine={false}
         />
         <YAxis dataKey="name" type="category" interval={0} />
-        <Bar dataKey="count" fill="#64df59">
+        <Bar dataKey="count" fill="#5bc74f" barSize={35} radius={[0, 3, 3, 0]}>
           <LabelList dataKey="count" position="right" />
         </Bar>
       </BarChart>

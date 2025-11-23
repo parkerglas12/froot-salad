@@ -43,7 +43,11 @@ function About() {
         rel="noopener noreferrer"
       >
         Contact Me!
-        <img src="linkedin.svg" alt="Linkedin" className="linkedin-icon" />
+        <img
+          src="linkedin.svg"
+          alt="linkedin social media icon"
+          className="linkedin-icon"
+        />
       </a>
     </>
   );

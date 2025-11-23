@@ -8,7 +8,11 @@ function LoseGame({ solution }) {
       </p>
       <div className="modal-froots">
         {solution.map((froot) => (
-          <img src={`${froot}.webp`} alt={froot} key={froot}></img>
+          <img
+            src={`${froot}.webp`}
+            alt={`${froot} in the solution`}
+            key={froot}
+          ></img>
         ))}
       </div>
     </>

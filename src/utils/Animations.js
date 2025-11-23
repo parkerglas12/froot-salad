@@ -68,15 +68,35 @@ export const fadeIn = {
   },
 };
 
-export const frootParent = {
+export const bounceIn = {
+  hidden: {
+    y: 60, // start above
+    scale: 0.8,
+    opacity: 0,
+  },
   visible: {
+    y: [60, 0, 15, 0],
+    scale: [0.8, 1, 0.95, 1],
+    opacity: [0, 0.33, 0.66, 1],
     transition: {
-      staggerChildren: 0.2,
+      duration: 0.6,
+      ease: "easeOut",
+      times: [0, 0.5, 0.75, 1],
     },
   },
 };
 
-export const frootChild = {
+export const bounceParent = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 2,
+      delayChildren: 0.5,
+    },
+  },
+};
+
+export const frootsAnimation = {
   visible: {
     scale: [1, 1.1, 1],
     rotate: [0, 8, -8, 0],
@@ -85,6 +105,14 @@ export const frootChild = {
       duration: 1.5,
       repeat: Infinity,
       ease: "easeInOut",
+    },
+  },
+};
+
+export const frootParent = {
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
     },
   },
 };

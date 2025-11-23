@@ -55,7 +55,7 @@ function Grid({ gridArray, fullResults, currentRound }) {
               }}
               transition={{ duration: 0.5 }}
               src={`${froot}.webp`}
-              alt={froot}
+              alt={`${froot} displayed on the answer grid`}
             />
           )}
           {index < currentRound * cols - cols &&

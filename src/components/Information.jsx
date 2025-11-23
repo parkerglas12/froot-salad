@@ -4,11 +4,13 @@ import Privacy from "./Privacy.jsx";
 
 function Information() {
   return (
-    <section className="information-layout flex-center">
-      <HowTo />
-      <About />
-      <Privacy />
-    </section>
+    <main className="information-container flex-center">
+      <section className="information-layout flex-center">
+        <HowTo />
+        <About />
+        <Privacy />
+      </section>
+    </main>
   );
 }
 

@@ -27,10 +27,10 @@ function Privacy() {
         tool and gets deleted when you clear your browser or cache data.
       </p>
       <p className="text-sm bold">
-        The Google Analytics data is collected using first-party cookies, which
-        you can always disable in your browser settings if you choose to do so.
-        The sole purpose of this data collection is to try and help me gauge how
-        I'm doing with user engagement. Please feel free to research Google
+        The Google Analytics data is collected using cookies, which you can
+        always disable in your browser settings if you choose to do so. The sole
+        purpose of this data collection is to try and help me gauge how I'm
+        doing with user engagement. Please feel free to research Google
         Analytics 4 and its privacy policies if you have any concerns.
       </p>
       <p className="text-sm">

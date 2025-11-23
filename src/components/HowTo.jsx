@@ -14,84 +14,142 @@ function HowTo() {
       </p>
       <div className="example-image">
         <div className="grid-item flex-center green">
-          <img src="apple.webp" alt="apple" />
+          <img
+            src="apple.webp"
+            alt="apple in the correct position with a green background"
+          />
         </div>
         <div className="grid-item flex-center yellow">
-          <img src="blueberry.webp" alt="blueberry" />
+          <img
+            src="blueberry.webp"
+            alt="blueberry in the solution but needs to move right with a yellow background"
+          />
           <ChevronsRight className="icon" size={18} />
         </div>
         <div className="grid-item flex-center red">
-          <img src="grape.webp" alt="grape" />
+          <img
+            src="grape.webp"
+            alt="grape not in the puzzle with a red background"
+          />
         </div>
         <div className="grid-item flex-center yellow">
-          <img src="raspberry.webp" alt="raspberry" />
+          <img
+            src="raspberry.webp"
+            alt="raspberry in the solution but needs to move left with a yellow background"
+          />
           <ChevronsLeft className="icon" size={18} />
         </div>
         <div className="grid-item flex-center green">
-          <img src="pineapple.webp" alt="pineapple" />
+          <img
+            src="pineapple.webp"
+            alt="pineapple in the correct position with a green background"
+          />
         </div>
         <div className="grid-item flex-center yellow">
-          <img src="peach.webp" alt="peach" />
+          <img
+            src="peach.webp"
+            alt="peach in the solution but needs to move right with a yellow background"
+          />
           <ChevronsRight className="icon" size={18} />
         </div>
         <div className="grid-item flex-center yellow">
-          <img src="watermelon.webp" alt="watermelon" />
+          <img
+            src="watermelon.webp"
+            alt="watermelon in the solution but needs to move left with a yellow background"
+          />
           <ChevronsLeft className="icon" size={18} />
         </div>
         <div className="grid-item flex-center red">
-          <img src="pear.webp" alt="pear" />
+          <img
+            src="pear.webp"
+            alt="pear not in the puzzle with a red background"
+          />
         </div>
       </div>
-      <div className="effect small">
+      <section className="effect small">
         <div className="example-container">
-          <div className="example-froots">
-            <div className="grid-item flex-center green">
-              <img src="apple.webp" alt="apple" />
+          <figure className="example-froots">
+            <div className="flex-center">
+              <div className="grid-item flex-center green">
+                <img
+                  src="apple.webp"
+                  alt="apple in the correct position with a green background"
+                />
+              </div>
+              <div className="grid-item flex-center green">
+                <img
+                  src="pineapple.webp"
+                  alt="pineapple in the correct position with a green background"
+                />
+              </div>
             </div>
-            <div className="grid-item flex-center green">
-              <img src="pineapple.webp" alt="pineapple" />
-            </div>
-          </div>
-          <p className="text-sm">Correct position</p>
+            <figcaption className="text-sm">Correct position</figcaption>
+          </figure>
         </div>
         <div className="example-container">
-          <div className="example-froots">
-            <div className="grid-item flex-center red">
-              <img src="grape.webp" alt="grape" />
+          <figure className="example-froots">
+            <div className="flex-center">
+              <div className="grid-item flex-center red">
+                <img
+                  src="grape.webp"
+                  alt="grape not in the puzzle with a red background"
+                />
+              </div>
+              <div className="grid-item flex-center red">
+                <img
+                  src="pear.webp"
+                  alt="pear not in the puzzle with a red background"
+                />
+              </div>
             </div>
-            <div className="grid-item flex-center red">
-              <img src="pear.webp" alt="pear" />
-            </div>
-          </div>
-          <p className="text-sm">Not in the solution</p>
+            <figcaption className="text-sm">Not in the solution</figcaption>
+          </figure>
         </div>
         <div className="example-container">
-          <div className="example-froots">
-            <div className="grid-item flex-center yellow">
-              <img src="raspberry.webp" alt="raspberry" />
-              <ChevronsLeft className="icon" size={18} />
+          <figure className="example-froots">
+            <div className="flex-center">
+              <div className="grid-item flex-center yellow">
+                <img
+                  src="raspberry.webp"
+                  alt="raspberry in the solution but needs to move left with a yellow background"
+                />
+                <ChevronsLeft className="icon" size={18} />
+              </div>
+              <div className="grid-item flex-center yellow">
+                <img
+                  src="watermelon.webp"
+                  alt="watermelon in the solution but needs to move left with a yellow background"
+                />
+                <ChevronsLeft className="icon" size={18} />
+              </div>
             </div>
-            <div className="grid-item flex-center yellow">
-              <img src="watermelon.webp" alt="watermelon" />
-              <ChevronsLeft className="icon" size={18} />
-            </div>
-          </div>
-          <p className="text-sm">In solution — move left</p>
+            <figcaption className="text-sm">In solution — move left</figcaption>
+          </figure>
         </div>
         <div className="example-container">
-          <div className="example-froots">
-            <div className="grid-item flex-center yellow">
-              <img src="blueberry.webp" alt="blueberry" />
-              <ChevronsRight className="icon" size={18} />
+          <figure className="example-froots">
+            <div className="flex-center">
+              <div className="grid-item flex-center yellow">
+                <img
+                  src="blueberry.webp"
+                  alt="blueberry in the solution but needs to move right with a yellow background"
+                />
+                <ChevronsRight className="icon" size={18} />
+              </div>
+              <div className="grid-item flex-center yellow">
+                <img
+                  src="peach.webp"
+                  alt="peach in the solution but needs to move right with a yellow background"
+                />
+                <ChevronsRight className="icon" size={18} />
+              </div>
             </div>
-            <div className="grid-item flex-center yellow">
-              <img src="peach.webp" alt="peach" />
-              <ChevronsRight className="icon" size={18} />
-            </div>
-          </div>
-          <p className="text-sm">In solution — move right</p>
+            <figcaption className="text-sm">
+              In solution — move right
+            </figcaption>
+          </figure>
         </div>
-      </div>
+      </section>
     </>
   );
 }

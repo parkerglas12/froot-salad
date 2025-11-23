@@ -10,35 +10,47 @@ function Intro() {
         feedback after each guess:
       </p>
       <div className="intro-example">
-        <div className="intro-container m1">
+        <figure className="intro-container m1">
           <div className="grid-item flex-center green">
-            <img src="apple.webp" alt="apple" />
+            <img
+              src="apple.webp"
+              alt="apple in the correct position with a green background"
+            />
           </div>
-          <p className="text-sm">Correct position</p>
-        </div>
-        <div className="intro-container m1">
+          <figcaption className="text-sm">Correct position</figcaption>
+        </figure>
+        <figure className="intro-container m1">
           <div className="grid-item flex-center red">
-            <img src="grape.webp" alt="grape" />
+            <img
+              src="grape.webp"
+              alt="grape not in the puzzle with a red background"
+            />
           </div>
-          <p className="text-sm">Not in the solution</p>
-        </div>
-        <div className="intro-container">
+          <figcaption className="text-sm">Not in the solution</figcaption>
+        </figure>
+        <figure className="intro-container">
           <div className="grid-item flex-center yellow">
-            <img src="blueberry.webp" alt="blueberry" />
+            <img
+              src="blueberry.webp"
+              alt="blueberry in the solution but needs to move right with a yellow background"
+            />
             <ChevronsRight className="icon" size={18} />
           </div>
-          <p className="text-sm">Move right</p>
-        </div>
-        <div className="intro-container">
+          <figcaption className="text-sm">Move right</figcaption>
+        </figure>
+        <figure className="intro-container">
           <div className="grid-item flex-center yellow">
-            <img src="kiwi.webp" alt="kiwi" />
+            <img
+              src="kiwi.webp"
+              alt="kiwi in the solution but needs to move left with a yellow background"
+            />
             <ChevronsLeft className="icon" size={18} />
           </div>
-          <p className="text-sm">Move left</p>
-        </div>
+          <figcaption className="text-sm">Move left</figcaption>
+        </figure>
       </div>
       <p className="text-sm">
-        To get started just enter your favorite combination of 8 froots!
+        To get started just enter any combination of 8 froots!
       </p>
     </>
   );

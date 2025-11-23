@@ -1,3 +1,5 @@
+import { Temporal } from "@js-temporal/polyfill";
+
 export const rows = 6;
 export const cols = 8;
 export const doubleXpThreshold = 5;
@@ -19,12 +21,12 @@ export const froots = [
 ];
 const rewardWords = [
   "Awesome!",
-  "Nice!",
-  "Great!",
+  "Excellent!",
+  "Wonderful!",
   "Stellar!",
-  "Sweet!",
+  "Amazing!",
   "Fantastic!",
-  "Peachy!",
+  "Sublime!",
 ];
 export const url = "https://frootsalad.com";
 const gridEmojis = {
@@ -41,6 +43,7 @@ export const identifier = {
   5: "5th",
   6: "6th",
 };
+export const days = ["M", "T", "W", "T", "F", "S", "S"];
 
 export function getRandomWord() {
   const randomIndex = Math.floor(Math.random() * rewardWords.length);
@@ -49,6 +52,16 @@ export function getRandomWord() {
 
 export function getRandomSalad(frootArray) {
   return frootArray.toSorted(() => 0.5 - Math.random()).slice(0, cols);
+}
+
+export function getProgress(prev, next, current) {
+  const xpInThisLvl = current - prev;
+  const xpForThisLvl = next - prev;
+  return xpForThisLvl > 0 ? (xpInThisLvl / xpForThisLvl) * 100 : 0;
+}
+
+export function currentDay() {
+  return Temporal.Now.plainDateISO().dayOfWeek - 1;
 }
 
 export function checkAttempt(attempt, solution) {

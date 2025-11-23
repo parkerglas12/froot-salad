@@ -9,8 +9,8 @@ function StandItem({ content, makeFrootItem, checkEnoughIngredients }) {
         }
         className="item-img"
       />
-      <h2 className="text-sm">{content.name}</h2>
-      <h2 className="text-sm">+{content.xp.toLocaleString("en-us")}XP</h2>
+      <h3 className="text-sm">{content.name}</h3>
+      <h3 className="text-sm">+{content.xp.toLocaleString("en-us")} XP</h3>
       <div
         className={`recipe-froots flex-center ${
           checkEnoughIngredients(content.recipe, content.number)
@@ -20,7 +20,11 @@ function StandItem({ content, makeFrootItem, checkEnoughIngredients }) {
       >
         {content.number > 1 ? <p className="text-sm">{content.number}x</p> : ""}
         {content.recipe.map((froot) => (
-          <img src={`${froot}.webp`} alt={froot} key={froot} />
+          <img
+            src={`${froot}.webp`}
+            alt={`${froot} used in this recipe`}
+            key={froot}
+          />
         ))}
       </div>
     </div>

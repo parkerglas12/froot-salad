@@ -21,24 +21,27 @@ function Keyboard({
               : partial.includes(froot)
               ? "yellow"
               : ""
-          }`}
+          } `}
           onPointerDown={() => handleKeyPress(froot)}
           key={froot}
         >
-          <img src={`${froot}.webp`} alt={froot} />
+          <img
+            src={`${froot}.webp`}
+            alt={`${froot} key for entering your answer`}
+          />
         </button>
       ))}
       <button
         className="delete-key froot-key btn flex-center max-span clickable"
         onPointerDown={() => handleOtherKeys("delete")}
-        aria-label="Delete Button"
+        aria-label="delete button"
       >
         <Delete size={27} color="#111" />
       </button>
       <button
         className="enter-key froot-key btn flex-center max-span clickable"
         onPointerDown={() => handleOtherKeys("enter")}
-        aria-label="Enter Button"
+        aria-label="enter button"
       >
         <CircleCheckBig size={27} color="#111" />
       </button>

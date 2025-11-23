@@ -12,7 +12,7 @@ function CopyModal() {
         animate="visible"
         variants={fadeIn}
       >
-        <h2 className="text-med">Copied!</h2>
+        <h3 className="text-med">Copied!</h3>
       </motion.div>
     </div>
   );

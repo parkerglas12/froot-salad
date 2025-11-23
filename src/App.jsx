@@ -8,11 +8,10 @@ import { Temporal } from "@js-temporal/polyfill";
 
 import ReactGA from "react-ga4";
 
-import Grid from "./components/Grid.jsx";
+import Home from "./components/Home.jsx";
 import Stats from "./components/Stats.jsx";
 import Modal from "./components/Modal.jsx";
 import Navbar from "./components/Navbar.jsx";
-import Keyboard from "./components/Keyboard.jsx";
 import Inventory from "./components/Inventory.jsx";
 import CopyModal from "./components/CopyModal.jsx";
 import MiniModal from "./components/MiniModal.jsx";
@@ -23,6 +22,7 @@ import {
   cols,
   froots,
   identifier,
+  currentDay,
   checkAttempt,
   getRandomSalad,
   createShareGrid,
@@ -50,6 +50,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [xpGain, setXpGain] = useState(0);
   const [xpBoost, setXpBoost] = useState(1);
+  const [dailyStreakIncreasing, setDailyStreakIncreasing] = useState(false);
   const [isLevelingUp, setIsLevelingUp] = useState(false);
   const [shareGrid, setShareGrid] = useState([]);
 
@@ -82,6 +83,8 @@ function App() {
       : {
           streak: 0,
           lastGame: Temporal.Now.plainDateISO(),
+          longestStreak: 0,
+          lastWeeklyReset: null,
         };
   });
   const [guessDistributionData, setGuessDistributionData] = useState(() => {
@@ -97,7 +100,10 @@ function App() {
           { name: "6th", count: 0 },
         ];
   });
-
+  const [lastSevenDays, setLastSevenDays] = useState(() => {
+    const storedValue = localStorage.getItem("lastSevenDays");
+    return storedValue ? JSON.parse(storedValue) : new Array(7).fill(false);
+  });
   const [gamesPlayed, setGamesPlayed] = useState(() => {
     const storedValue = localStorage.getItem("gamesPlayed");
     return storedValue ? JSON.parse(storedValue) : 0;
@@ -156,6 +162,10 @@ function App() {
   }, [guessDistributionData]);
 
   useEffect(() => {
+    localStorage.setItem("lastSevenDays", JSON.stringify(lastSevenDays));
+  }, [lastSevenDays]);
+
+  useEffect(() => {
     localStorage.setItem("gamesPlayed", JSON.stringify(gamesPlayed));
   }, [gamesPlayed]);
 
@@ -207,22 +217,34 @@ function App() {
 
   // USE EFFECTS
   useEffect(() => {
+    const day = currentDay();
+    const dayISO = Temporal.Now.plainDateISO().toString();
+    if (day === 0 && dayISO !== dateInformation.lastWeeklyReset) {
+      setDateInformation((prev) => ({
+        ...prev,
+        lastWeeklyReset: dayISO,
+      }));
+      setLastSevenDays(new Array(7).fill(false));
+    }
     if (!introModalShown) {
       setShowModal(true);
       setModalType("intro");
     } else {
-      setShowModal(true);
-      setModalType("welcome");
+      if (lastSevenDays[currentDay()] !== true) {
+        setShowModal(true);
+        setModalType("welcome");
+      }
     }
     const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
     const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
     if (inBetween > 1) {
-      setDateInformation({
+      setDateInformation((prev) => ({
+        ...prev,
         streak: 0,
         lastGame: Temporal.Now.plainDateISO(),
-      });
+      }));
     }
-    if (dateInformation.streak > doubleXpThreshold) {
+    if (dateInformation.streak >= doubleXpThreshold) {
       setXpBoost(2);
     }
   }, []);
@@ -254,6 +276,10 @@ function App() {
     setInSolution([]);
     setNotInPuzzle([]);
     setSolution(getRandomSalad(froots));
+    updateDailyStreak();
+    setLastSevenDays((prev) =>
+      prev.map((day, index) => (index === currentDay() ? true : day))
+    );
   }
 
   function handleModalClick() {
@@ -300,18 +326,23 @@ function App() {
   function updateDailyStreak() {
     const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
     const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
+    if (dateInformation.streak >= doubleXpThreshold) {
+      setXpBoost(2);
+    }
     if (
       (inBetween === 1 && dateInformation.streak >= 1) ||
       (inBetween === 0 && dateInformation.streak === 0)
     ) {
       const newStreak = dateInformation.streak + 1;
-      setDateInformation(() => ({
+      setDailyStreakIncreasing(true);
+      setDateInformation((prev) => ({
         streak: newStreak,
         lastGame: Temporal.Now.plainDateISO(),
+        longestStreak:
+          newStreak > prev.longestStreak ? newStreak : prev.longestStreak,
       }));
-      if (newStreak > doubleXpThreshold) {
-        setXpBoost(2);
-      }
+    } else {
+      setDailyStreakIncreasing(false);
     }
   }
 
@@ -458,7 +489,6 @@ function App() {
         }, 2000);
       }
       setShareGrid(createShareGrid(newFullResults));
-      updateDailyStreak();
       setResult(newResult);
       setCurrentRound(newRound);
       setFullResults(newFullResults);
@@ -472,17 +502,21 @@ function App() {
         {showModal && (
           <>
             <Modal
+              xp={xp}
               level={level}
               xpGain={xpGain}
               streak={streak}
+              levelUp={levelUp}
               shareGrid={shareGrid}
               modalType={modalType}
               solution={prevSolution}
               roundGuesses={roundGuesses}
               isLevelingUp={isLevelingUp}
+              lastSevenDays={lastSevenDays}
               dateInformation={dateInformation}
               copyToClipboard={copyToClipboard}
               handleModalClick={handleModalClick}
+              dailyStreakIncreasing={dailyStreakIncreasing}
             />
             {modalType === "win" && (
               <Confetti
@@ -499,50 +533,42 @@ function App() {
       </AnimatePresence>
       <AnimatePresence>{showCopyModal && <CopyModal />}</AnimatePresence>
       <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
-      {currentPage === "home" ? (
-        <main className="main-container flex-center">
-          <Grid
-            gridArray={gridArray}
-            fullResults={fullResults}
-            currentRound={currentRound}
-          />
-          <Keyboard
-            partial={partial}
-            inSolution={inSolution}
-            notInPuzzle={notInPuzzle}
-            handleKeyPress={handleKeyPress}
-            handleOtherKeys={handleOtherKeys}
-          />
-        </main>
-      ) : currentPage === "stats" ? (
-        <main className="stats-container flex-center">
-          <Stats
-            xp={xp}
-            wins={wins}
-            level={level}
-            losses={losses}
-            streak={streak}
-            guesses={guesses}
-            levelUp={levelUp}
-            maxStreak={maxStreak}
-            gamesPlayed={gamesPlayed}
-            dateInformation={dateInformation}
-            guessDistributionData={guessDistributionData}
-          />
-        </main>
-      ) : currentPage === "information" ? (
-        <main className="information-container flex-center">
-          <Information />
-        </main>
-      ) : (
-        <main className="inventory-container flex-center">
-          <Inventory
-            level={level}
-            makeFrootItem={makeFrootItem}
-            frootCollection={frootCollection}
-            checkEnoughIngredients={checkEnoughIngredients}
-          />
-        </main>
+      {currentPage === "home" && (
+        <Home
+          gridArray={gridArray}
+          fullResults={fullResults}
+          currentRound={currentRound}
+          partial={partial}
+          inSolution={inSolution}
+          notInPuzzle={notInPuzzle}
+          handleKeyPress={handleKeyPress}
+          handleOtherKeys={handleOtherKeys}
+        />
+      )}
+      {currentPage === "stats" && (
+        <Stats
+          xp={xp}
+          wins={wins}
+          level={level}
+          losses={losses}
+          streak={streak}
+          guesses={guesses}
+          levelUp={levelUp}
+          maxStreak={maxStreak}
+          gamesPlayed={gamesPlayed}
+          lastSevenDays={lastSevenDays}
+          dateInformation={dateInformation}
+          guessDistributionData={guessDistributionData}
+        />
+      )}
+      {currentPage === "information" && <Information />}
+      {currentPage === "inventory" && (
+        <Inventory
+          level={level}
+          makeFrootItem={makeFrootItem}
+          frootCollection={frootCollection}
+          checkEnoughIngredients={checkEnoughIngredients}
+        />
       )}
     </>
   );

@@ -21,32 +21,32 @@ function Inventory({
   checkEnoughIngredients,
 }) {
   return (
-    <>
+    <main className="inventory-container flex-center">
       <section className="inventory-layout">
         <h2 className="heading effect max-cols">Froot Collection</h2>
-        <div className="collection-grid">
+        <section className="collection-grid">
           {Object.entries(frootCollection).map(([key, value]) => (
             <div className="collection-item flex-center br" key={key}>
               <img
                 src={`${key}.webp`}
-                alt={`${key}`}
+                alt={`number of ${key}s you have`}
                 className="collection-froot"
               />
               <div className="flex-center">
-                <h2 className="text-med">{value}</h2>
+                <h3 className="text-med">{value}</h3>
               </div>
             </div>
           ))}
-        </div>
-        <p className="text-sm inventory-note">
-          -You collect all the froots from the solution when you win!
-        </p>
+        </section>
+        <h3 className="text-sm inventory-note">
+          *You collect all the froots from the solution when you win!
+        </h3>
         <h2 className="heading effect max-cols m2">Froot Stand</h2>
-        <div className="stand-grid">
-          <div className="stand-wrapper flex-center">
+        <section className="stand-grid">
+          <section className="stand-wrapper flex-center">
             {level >= 3 ? (
               <>
-                <h2 className="text-med m3">Make Sweet Smoothies!</h2>
+                <h3 className="text-med m3">Make Sweet Smoothies!</h3>
                 <div className="stand-content flex-center">
                   <StandItem
                     content={tropicalSmoothieContent}
@@ -68,15 +68,14 @@ function Inventory({
             ) : (
               <>
                 <LockKeyhole className="icon" size={40} color={"#111"} />
-                <p className="text-sm">Unlocks At Level 3</p>
+                <h3 className="text-sm">Unlocks At Level 3</h3>
               </>
             )}
-          </div>
-          <div className="stand-wrapper flex-center">
+          </section>
+          <section className="stand-wrapper flex-center">
             {level >= 5 ? (
               <>
-                <h2 className="text-med m3">Make Delicious Juice!</h2>
-
+                <h3 className="text-med m3">Make Delicious Juice!</h3>
                 <div className="stand-content flex-center">
                   <StandItem
                     content={appleJuiceContent}
@@ -98,14 +97,14 @@ function Inventory({
             ) : (
               <>
                 <LockKeyhole className="icon" size={40} color={"#111"} />
-                <p className="text-sm">Unlocks At Level 5</p>
+                <h3 className="text-sm">Unlocks At Level 5</h3>
               </>
             )}
-          </div>
-          <div className="stand-wrapper flex-center">
+          </section>
+          <section className="stand-wrapper flex-center">
             {level >= 7 ? (
               <>
-                <h2 className="text-med m3">Make Yummy Jam!</h2>
+                <h3 className="text-med m3">Make Yummy Jam!</h3>
                 <div className="stand-content flex-center">
                   <StandItem
                     content={cherryJamContent}
@@ -127,13 +126,13 @@ function Inventory({
             ) : (
               <>
                 <LockKeyhole className="icon" size={40} color={"#111"} />
-                <p className="text-sm">Unlocks At Level 7</p>
+                <h3 className="text-sm">Unlocks At Level 7</h3>
               </>
             )}
-          </div>
-        </div>
+          </section>
+        </section>
       </section>
-    </>
+    </main>
   );
 }
 

@@ -8,35 +8,49 @@ import LoseGame from "./LoseGame.jsx";
 import { dropIn } from "../utils/Animations.js";
 
 function Modal({
+  xp,
   level,
   xpGain,
   streak,
+  levelUp,
   shareGrid,
   modalType,
   solution,
   roundGuesses,
   isLevelingUp,
+  lastSevenDays,
   dateInformation,
   copyToClipboard,
   handleModalClick,
+  dailyStreakIncreasing,
 }) {
   const modals = {
     win: (
       <WinGame
+        xp={xp}
         level={level}
         xpGain={xpGain}
         streak={streak}
+        levelUp={levelUp}
         solution={solution}
         shareGrid={shareGrid}
         isLevelingUp={isLevelingUp}
         roundGuesses={roundGuesses}
         copyToClipboard={copyToClipboard}
+        dateInformation={dateInformation}
+        dailyStreakIncreasing={dailyStreakIncreasing}
       />
     ),
     loss: <LoseGame solution={solution} />,
     intro: <Intro />,
-    welcome: <Welcome dateInformation={dateInformation} />,
+    welcome: (
+      <Welcome
+        dateInformation={dateInformation}
+        lastSevenDays={lastSevenDays}
+      />
+    ),
   };
+
   return (
     <div className="modal-container flex-center">
       <motion.div
