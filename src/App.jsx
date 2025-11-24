@@ -216,37 +216,61 @@ function App() {
   }, []);
 
   // USE EFFECTS
+  // WEEKLY RESET (runs once per Monday)
+  useEffect(() => {
+    const day = currentDay(); // 0 = Monday
+    const todayISO = Temporal.Now.plainDateISO().toString();
+
+    setDateInformation((prev) => {
+      if (
+        day === 0 &&
+        prev.lastWeeklyReset !== todayISO &&
+        !lastSevenDays[day]
+      ) {
+        // Reset lastSevenDays on Monday
+        setLastSevenDays(new Array(7).fill(false));
+        return {
+          ...prev,
+          lastWeeklyReset: todayISO,
+        };
+      }
+      return prev;
+    });
+  }, []);
+
+  // MODAL, STREAK & XP LOGIC (runs once on mount)
   useEffect(() => {
     const day = currentDay();
-    const dayISO = Temporal.Now.plainDateISO().toString();
-    if (day === 0 && dayISO !== dateInformation.lastWeeklyReset) {
-      setDateInformation((prev) => ({
-        ...prev,
-        lastWeeklyReset: dayISO,
-      }));
-      setLastSevenDays(new Array(7).fill(false));
-    }
+
+    // Handle intro / welcome modal
     if (!introModalShown) {
       setShowModal(true);
       setModalType("intro");
     } else {
-      if (lastSevenDays[currentDay()] !== true) {
-        setShowModal(true);
-        setModalType("welcome");
+      setLastSevenDays((prev) => {
+        if (!prev[day]) {
+          setShowModal(true);
+          setModalType("welcome");
+        }
+        return prev;
+      });
+    }
+
+    // Reset streak if last game was >1 day ago
+    setDateInformation((prev) => {
+      const lastDate = Temporal.PlainDate.from(prev.lastGame);
+      const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
+
+      if (inBetween > 1) {
+        return {
+          ...prev,
+          streak: 0,
+          lastGame: Temporal.Now.plainDateISO(),
+        };
       }
-    }
-    const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
-    const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
-    if (inBetween > 1) {
-      setDateInformation((prev) => ({
-        ...prev,
-        streak: 0,
-        lastGame: Temporal.Now.plainDateISO(),
-      }));
-    }
-    if (dateInformation.streak >= doubleXpThreshold) {
-      setXpBoost(2);
-    }
+      return prev;
+    });
+    setXpBoost(dateInformation.streak >= doubleXpThreshold ? 2 : 1);
   }, []);
 
   // FUNCTIONS
