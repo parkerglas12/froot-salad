@@ -220,7 +220,6 @@ function App() {
   useEffect(() => {
     const day = currentDay(); // 0 = Monday
     const todayISO = Temporal.Now.plainDateISO().toString();
-
     setDateInformation((prev) => {
       if (
         day === 0 &&
@@ -360,6 +359,7 @@ function App() {
       const newStreak = dateInformation.streak + 1;
       setDailyStreakIncreasing(true);
       setDateInformation((prev) => ({
+        ...prev,
         streak: newStreak,
         lastGame: Temporal.Now.plainDateISO(),
         longestStreak:
