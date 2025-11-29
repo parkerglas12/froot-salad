@@ -27,6 +27,19 @@ const rewardWords = [
   "Amazing!",
   "Fantastic!",
   "Sublime!",
+  "Woohoo!",
+  "Marvelous!",
+];
+const streakPhrases = [
+  "You'll be back tomorrow, right?",
+  "Can't wait to see you tomorrow!",
+  "A froot salad a day keeps the brain fog away!",
+  "Come back tomorrow to enjoy your daily dose of froot!",
+  "See you at the same time tomorrow?",
+  "Your streak is getting sweeter every day!",
+  "The froot gods smile upon your dedication!",
+  "What'll be in the salad tomorrow?",
+  "Don’t let the salad bowl get dusty—return tomorrow!",
 ];
 export const url = "https://frootsalad.com";
 const gridEmojis = {
@@ -48,6 +61,11 @@ export const days = ["M", "T", "W", "T", "F", "S", "S"];
 export function getRandomWord() {
   const randomIndex = Math.floor(Math.random() * rewardWords.length);
   return rewardWords[randomIndex];
+}
+
+export function getStreakPhrase() {
+  const randomIndex = Math.floor(Math.random() * streakPhrases.length);
+  return streakPhrases[randomIndex];
 }
 
 export function getRandomSalad(frootArray) {

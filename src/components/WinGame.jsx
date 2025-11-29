@@ -17,7 +17,7 @@ import CountUp from "react-countup";
 
 import { Copy, Flame, Puzzle } from "lucide-react";
 
-import { url } from "../utils/Helpers.js";
+import { url, getStreakPhrase } from "../utils/Helpers.js";
 
 import {
   bounceIn,
@@ -74,7 +74,7 @@ function WinGame({
 
         <div className="flex-center flex-column m4">
           {isLevelingUp ? (
-            <h3 className="text-med">Woohoo! You're now Level {level}!</h3>
+            <h3 className="text-med">You've reached level {level}!</h3>
           ) : (
             <>
               <h3 className="text-lg">Level {level}</h3>
@@ -86,8 +86,10 @@ function WinGame({
             </>
           )}
           {dailyStreakIncreasing && (
-            <h3 className="text-med m4">
-              Your daily streak is now {dateInformation.streak} days!
+            <h3 className={`win-text ${!isLevelingUp ? "m4" : ""}`}>
+              You're on a{" "}
+              <span className="bold">{dateInformation.streak} day</span> streak!{" "}
+              {getStreakPhrase()}
             </h3>
           )}
         </div>

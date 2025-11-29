@@ -6,8 +6,6 @@ import { AnimatePresence } from "framer-motion";
 
 import { Temporal } from "@js-temporal/polyfill";
 
-import ReactGA from "react-ga4";
-
 import Home from "./components/Home.jsx";
 import Stats from "./components/Stats.jsx";
 import Modal from "./components/Modal.jsx";
@@ -82,9 +80,9 @@ function App() {
       ? JSON.parse(storedValue)
       : {
           streak: 0,
-          lastGame: Temporal.Now.plainDateISO(),
+          lastGame: Temporal.Now.plainDateISO().toString(),
+          // lastGame: Temporal.PlainDate.from("2025-11-25").toString(),
           longestStreak: 0,
-          lastWeeklyReset: null,
         };
   });
   const [guessDistributionData, setGuessDistributionData] = useState(() => {
@@ -205,66 +203,40 @@ function App() {
     localStorage.setItem("introModalShown", JSON.stringify(introModalShown));
   }, [introModalShown]);
 
-  // ANALYTICS
-  const key = import.meta.env.VITE_KEY;
-  const isProd = window.location.hostname !== "localhost";
-  useEffect(() => {
-    if (isProd) {
-      ReactGA.initialize(key);
-      ReactGA.send({ hitType: "pageview", page: window.location.pathname });
-    }
-  }, []);
-
   // USE EFFECTS
-  // WEEKLY RESET (runs once per Monday)
   useEffect(() => {
-    const day = currentDay(); // 0 = Monday
-    const todayISO = Temporal.Now.plainDateISO().toString();
-    setDateInformation((prev) => {
-      if (
-        day === 0 &&
-        prev.lastWeeklyReset !== todayISO &&
-        !lastSevenDays[day]
-      ) {
-        // Reset lastSevenDays on Monday
-        setLastSevenDays(new Array(7).fill(false));
-        return {
-          ...prev,
-          lastWeeklyReset: todayISO,
-        };
-      }
-      return prev;
-    });
-  }, []);
-
-  // MODAL, STREAK & XP LOGIC (runs once on mount)
-  useEffect(() => {
-    const day = currentDay();
-
-    // Handle intro / welcome modal
+    const day = currentDay(); // 0 = Monday 6 = Sunday
+    const todayISO = Temporal.Now.plainDateISO();
+    // const todayTest = Temporal.PlainDate.from("2025-12-06");
+    // const gap = todayTest.since(
+    //   Temporal.PlainDate.from(dateInformation.lastGame),
+    //   { largestUnit: "days" }
+    // );
+    const gap = todayISO.since(
+      Temporal.PlainDate.from(dateInformation.lastGame),
+      { largestUnit: "days" }
+    );
+    const dayGap = gap.days;
+    if (dayGap > day) {
+      setLastSevenDays(new Array(7).fill(false));
+    }
     if (!introModalShown) {
       setShowModal(true);
       setModalType("intro");
     } else {
-      setLastSevenDays((prev) => {
-        if (!prev[day]) {
-          setShowModal(true);
-          setModalType("welcome");
-        }
-        return prev;
-      });
+      if (!lastSevenDays[day]) {
+        setShowModal(true);
+        setModalType("welcome");
+      }
     }
-
-    // Reset streak if last game was >1 day ago
     setDateInformation((prev) => {
       const lastDate = Temporal.PlainDate.from(prev.lastGame);
+      // const inBetween = todayTest.since(lastDate).days;
       const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
-
       if (inBetween > 1) {
         return {
           ...prev,
           streak: 0,
-          lastGame: Temporal.Now.plainDateISO(),
         };
       }
       return prev;
@@ -348,20 +320,17 @@ function App() {
 
   function updateDailyStreak() {
     const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
+    // const todayTest = Temporal.PlainDate.from("2025-12-06");
+    // const inBetween = todayTest.since(lastDate).days;
     const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
-    if (dateInformation.streak >= doubleXpThreshold) {
-      setXpBoost(2);
-    }
-    if (
-      (inBetween === 1 && dateInformation.streak >= 1) ||
-      (inBetween === 0 && dateInformation.streak === 0)
-    ) {
+    setXpBoost(dateInformation.streak >= doubleXpThreshold ? 2 : 1);
+    if (inBetween >= 1 || dateInformation.streak === 0) {
       const newStreak = dateInformation.streak + 1;
       setDailyStreakIncreasing(true);
       setDateInformation((prev) => ({
-        ...prev,
         streak: newStreak,
-        lastGame: Temporal.Now.plainDateISO(),
+        // lastGame: todayTest,
+        lastGame: Temporal.Now.plainDateISO().toString(),
         longestStreak:
           newStreak > prev.longestStreak ? newStreak : prev.longestStreak,
       }));

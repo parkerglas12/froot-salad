@@ -17,8 +17,8 @@ function Welcome({ dateInformation, lastSevenDays }) {
         <p className="text-sm">
           Your on a <span className="bold">{dateInformation.streak}-day</span>{" "}
           streak. Get it over <span className="bold">5+ days</span> and earn{" "}
-          <span className="bold">DOUBLE XP</span> on all your wins! Play a round
-          today and grow your streak!
+          <span className="bold">DOUBLE XP</span> on all your wins! Play a quick
+          round to grow your streak!
         </p>
       )}
       <StreakCalendar lastSevenDays={lastSevenDays} />

@@ -507,6 +507,12 @@
   text-align: left;
 }
 
+.modal-container .modal .win-text {
+  width: 85%;
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+}
+
 .modal-container .modal .welcome-stats {
   display: grid;
   grid-template-columns: 3fr 4fr;

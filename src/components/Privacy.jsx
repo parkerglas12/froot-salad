@@ -17,30 +17,41 @@ function Privacy() {
       </p>
       <p className="text-sm bold">
         I would like to start by stating that this website doesn't collect
-        personal data, as you've probably noticed. The only data that is
-        collected is anonymous gameplay data, which is used solely for the
-        purpose of enhancing the game experience, and Google Analytics 4 data
-        which is used to track website analytics.
+        personal data, as you've probably noticed. The only data collected is
+        anonymous gameplay data used solely to enhance the game experience, and
+        anonymous website analytics data used to track statistics such as page
+        views, visitors, etc.
       </p>
       <p className="text-sm bold">
-        The gameplay data is currently just saved in the browser's local storage
-        tool and gets deleted when you clear your browser or cache data.
+        The gameplay data is currently stored in the browser's local storage and
+        is deleted when you clear your browser's cache. This is basically all
+        the data you see on the stats page, and using local storage ensures it
+        isn't lost when you exit the site.
       </p>
       <p className="text-sm bold">
-        The Google Analytics data is collected using cookies, which you can
-        always disable in your browser settings if you choose to do so. The sole
-        purpose of this data collection is to try and help me gauge how I'm
-        doing with user engagement. Please feel free to research Google
-        Analytics 4 and its privacy policies if you have any concerns.
+        The analytics data is collected using a service called Simple Analytics,
+        a privacy-friendly analytics platform that doesn't use cookies or
+        trackers. Simple Analytics is compliant with all privacy policies,
+        including GDPR, PECR, CCPA, and more. Please feel free to research
+        Simple Analytics if you have any concerns.
       </p>
       <p className="text-sm">
         If you have any other questions or concerns about your privacy while
         using the site, or if you have any tips for me on how to improve my
-        practices, please email me at parkerglas@gmail.com or reach out to me
+        practices, please email me at{" "}
+        <span className="bold">parkerglas@gmail.com</span> or reach out to me
         via Linkedin.
       </p>
-      <a href="privacy_policy.html" target="_blank" rel="noopener noreferrer">
+      <a
+        className="m4"
+        href="privacy_policy.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Privacy Policy
+      </a>
+      <a href="https://www.simpleanalytics.com/" target="_blank">
+        Simple Analytics
       </a>
     </>
   );
