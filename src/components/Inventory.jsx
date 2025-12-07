@@ -38,9 +38,6 @@ function Inventory({
             </div>
           ))}
         </section>
-        <h3 className="text-sm inventory-note">
-          *You collect all the froots from the solution when you win!
-        </h3>
         <h2 className="heading effect max-cols m2">Froot Stand</h2>
         <section className="stand-grid">
           <section className="stand-wrapper flex-center">

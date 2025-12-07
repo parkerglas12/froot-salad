@@ -11,20 +11,15 @@ import {
   LinkedinIcon,
 } from "react-share";
 
-import { motion } from "framer-motion";
-
 import CountUp from "react-countup";
 
-import { Copy, Flame, Puzzle } from "lucide-react";
+import { motion } from "framer-motion";
 
-import { url, getStreakPhrase } from "../utils/Helpers.js";
+import { Zap, Copy, Flame, TrendingUp, ArrowBigUpDash } from "lucide-react";
 
-import {
-  bounceIn,
-  bounceParent,
-  frootsAnimation,
-  frootParent,
-} from "../utils/Animations.js";
+import { url } from "../utils/Helpers.js";
+
+import { bounceIn, bounceParent } from "../utils/Animations.js";
 
 function WinGame({
   xp,
@@ -32,7 +27,6 @@ function WinGame({
   xpGain,
   streak,
   levelUp,
-  solution,
   shareGrid,
   roundGuesses,
   isLevelingUp,
@@ -57,56 +51,56 @@ function WinGame({
               className="text-lg"
               start={0}
               end={xpGain}
-              duration={2}
+              duration={1}
               prefix="+"
-              suffix=" XP"
             />
+            <Zap color={"#B083FF"} size={25} />
           </motion.div>
           <motion.div className="modal-flex" variants={bounceIn}>
             <h3 className="text-lg">{streak}</h3>
-            <Flame color={"#ff8400"} size={30} />
+            <TrendingUp color={"#4bb00f"} size={35} className="m5" />
           </motion.div>
           <motion.div className="modal-flex" variants={bounceIn}>
-            <h3 className="text-lg">{roundGuesses}</h3>
-            <Puzzle color={"#4bb00f"} size={30} />
+            <h3 className="text-lg">{roundGuesses} tries</h3>
           </motion.div>
         </motion.div>
-
-        <div className="flex-center flex-column m4">
+        <div className="win-game-container flex-center m4">
           {isLevelingUp ? (
-            <h3 className="text-med">You've reached level {level}!</h3>
+            <div className="flex-center">
+              <div className="flex-center">
+                <ArrowBigUpDash color={"#111"} size={30} />
+                <h3 className="text-med">You're level {level}!</h3>
+              </div>
+            </div>
           ) : (
             <>
-              <h3 className="text-lg">Level {level}</h3>
-              {level === 1 ? (
-                <ProgressBar start={0} end={250} current={xp} />
-              ) : (
-                <ProgressBar start={levelUp / 2} end={levelUp} current={xp} />
-              )}
+              <div className="flex-center flex-column">
+                <h3 className="text-lg">Level {level}</h3>
+                {level === 1 ? (
+                  <ProgressBar start={0} end={250} current={xp} />
+                ) : (
+                  <ProgressBar start={levelUp / 2} end={levelUp} current={xp} />
+                )}
+              </div>
             </>
           )}
           {dailyStreakIncreasing && (
-            <h3 className={`win-text ${!isLevelingUp ? "m4" : ""}`}>
-              You're on a{" "}
-              <span className="bold">{dateInformation.streak} day</span> streak!{" "}
-              {getStreakPhrase()}
-            </h3>
+            <>
+              <div className="flex-center flex-column">
+                <div className="flex-center">
+                  <Flame className="glow-icon" color={"#ff8400"} size={40} />
+                  <p className="text-lg">{dateInformation.streak}</p>
+                </div>
+                <p className="text-sm">day streak</p>
+              </div>
+            </>
           )}
         </div>
-        <motion.div
-          className="modal-froots m4"
-          variants={frootParent}
-          animate="visible"
-        >
-          {solution.map((froot) => (
-            <motion.img
-              src={`${froot}.webp`}
-              alt={`${froot} in the solution`}
-              key={froot}
-              variants={frootsAnimation}
-            ></motion.img>
-          ))}
-        </motion.div>
+        {dailyStreakIncreasing && (
+          <h3 className="win-text text-sm">
+            The flame's back! Don’t miss tomorrow!
+          </h3>
+        )}
         <div className="social-media m2">
           <Copy
             onClick={copyToClipboard}

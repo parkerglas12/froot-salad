@@ -1,7 +1,7 @@
-export const dropIn = {
+export const modalDisplay = {
   hidden: {
-    y: "-100vh",
-    opacity: 0,
+    y: "10vh",
+    opacity: 0.5,
   },
   visible: {
     y: 0,
@@ -13,10 +13,9 @@ export const dropIn = {
     },
   },
   exit: {
-    y: "100vh",
     opacity: 0,
     transition: {
-      duration: 0.4,
+      duration: 0.25,
     },
   },
 };
@@ -47,41 +46,19 @@ export const slideIn = {
   },
 };
 
-export const fadeIn = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      type: "tween",
-      duration: 0.2,
-      ease: "easeInOut",
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.2,
-      ease: "easeInOut",
-    },
-  },
-};
-
 export const bounceIn = {
   hidden: {
-    y: 60, // start above
-    scale: 0.8,
+    y: 30,
+    scale: 0.5,
     opacity: 0,
   },
   visible: {
-    y: [60, 0, 15, 0],
-    scale: [0.8, 1, 0.95, 1],
-    opacity: [0, 0.33, 0.66, 1],
+    y: [30, 0, 0],
+    scale: [1, 1.25, 1],
+    opacity: [0, 0.5, 1],
     transition: {
-      duration: 0.6,
+      duration: 0.35,
       ease: "easeOut",
-      times: [0, 0.5, 0.75, 1],
     },
   },
 };
@@ -90,29 +67,8 @@ export const bounceParent = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 2,
-      delayChildren: 0.5,
-    },
-  },
-};
-
-export const frootsAnimation = {
-  visible: {
-    scale: [1, 1.1, 1],
-    rotate: [0, 8, -8, 0],
-    y: [0, -3, 0],
-    transition: {
-      duration: 1.5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  },
-};
-
-export const frootParent = {
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 1,
+      delayChildren: 0.25,
     },
   },
 };

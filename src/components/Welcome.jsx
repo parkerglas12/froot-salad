@@ -1,27 +1,22 @@
 import StreakCalendar from "./StreakCalendar.jsx";
 
-import { doubleXpThreshold } from "../utils/Helpers.js";
+import { Flame } from "lucide-react";
 
 function Welcome({ dateInformation, lastSevenDays }) {
   return (
     <>
       <h2 className="heading">Welcome Back!</h2>
-      {dateInformation.streak >= doubleXpThreshold && (
-        <p className="text-sm">
-          You're on a <span className="bold">{dateInformation.streak}-day</span>{" "}
-          streak and earning <span className="bold">DOUBLE XP</span> on all your
-          wins! Keep it up by completing a game today!
-        </p>
-      )}
-      {dateInformation.streak < doubleXpThreshold && (
-        <p className="text-sm">
-          Your on a <span className="bold">{dateInformation.streak}-day</span>{" "}
-          streak. Get it over <span className="bold">5+ days</span> and earn{" "}
-          <span className="bold">DOUBLE XP</span> on all your wins! Play a quick
-          round to grow your streak!
-        </p>
-      )}
-      <StreakCalendar lastSevenDays={lastSevenDays} />
+      <div className="welcome-container">
+        <div className="flex-center">
+          <Flame color={"#111"} size={45} />
+          <p className="text-lg">{dateInformation.streak}</p>
+        </div>
+        <p className="text-sm">day streak</p>
+        <p className="text-sm">Ready to extend your streak?</p>
+      </div>
+      <div className="welcome-calendar">
+        <StreakCalendar lastSevenDays={lastSevenDays} />
+      </div>
     </>
   );
 }

@@ -8,6 +8,7 @@ function Home({
   partial,
   inSolution,
   notInPuzzle,
+  currentAttempt,
   handleKeyPress,
   handleOtherKeys,
 }) {
@@ -22,6 +23,7 @@ function Home({
         partial={partial}
         inSolution={inSolution}
         notInPuzzle={notInPuzzle}
+        currentAttempt={currentAttempt}
         handleKeyPress={handleKeyPress}
         handleOtherKeys={handleOtherKeys}
       />

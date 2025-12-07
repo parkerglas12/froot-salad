@@ -81,7 +81,6 @@ function App() {
       : {
           streak: 0,
           lastGame: Temporal.Now.plainDateISO().toString(),
-          // lastGame: Temporal.PlainDate.from("2025-11-25").toString(),
           longestStreak: 0,
         };
   });
@@ -207,11 +206,6 @@ function App() {
   useEffect(() => {
     const day = currentDay(); // 0 = Monday 6 = Sunday
     const todayISO = Temporal.Now.plainDateISO();
-    // const todayTest = Temporal.PlainDate.from("2025-12-06");
-    // const gap = todayTest.since(
-    //   Temporal.PlainDate.from(dateInformation.lastGame),
-    //   { largestUnit: "days" }
-    // );
     const gap = todayISO.since(
       Temporal.PlainDate.from(dateInformation.lastGame),
       { largestUnit: "days" }
@@ -231,7 +225,6 @@ function App() {
     }
     setDateInformation((prev) => {
       const lastDate = Temporal.PlainDate.from(prev.lastGame);
-      // const inBetween = todayTest.since(lastDate).days;
       const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
       if (inBetween > 1) {
         return {
@@ -320,8 +313,6 @@ function App() {
 
   function updateDailyStreak() {
     const lastDate = Temporal.PlainDate.from(dateInformation.lastGame);
-    // const todayTest = Temporal.PlainDate.from("2025-12-06");
-    // const inBetween = todayTest.since(lastDate).days;
     const inBetween = Temporal.Now.plainDateISO().since(lastDate).days;
     setXpBoost(dateInformation.streak >= doubleXpThreshold ? 2 : 1);
     if (inBetween >= 1 || dateInformation.streak === 0) {
@@ -329,7 +320,6 @@ function App() {
       setDailyStreakIncreasing(true);
       setDateInformation((prev) => ({
         streak: newStreak,
-        // lastGame: todayTest,
         lastGame: Temporal.Now.plainDateISO().toString(),
         longestStreak:
           newStreak > prev.longestStreak ? newStreak : prev.longestStreak,
@@ -534,6 +524,7 @@ function App() {
           partial={partial}
           inSolution={inSolution}
           notInPuzzle={notInPuzzle}
+          currentAttempt={currentAttempt}
           handleKeyPress={handleKeyPress}
           handleOtherKeys={handleOtherKeys}
         />

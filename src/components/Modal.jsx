@@ -5,7 +5,7 @@ import WinGame from "./WinGame.jsx";
 import Welcome from "./Welcome.jsx";
 import LoseGame from "./LoseGame.jsx";
 
-import { dropIn } from "../utils/Animations.js";
+import { modalDisplay } from "../utils/Animations.js";
 
 function Modal({
   xp,
@@ -45,6 +45,7 @@ function Modal({
     intro: <Intro />,
     welcome: (
       <Welcome
+        xp={xp}
         dateInformation={dateInformation}
         lastSevenDays={lastSevenDays}
       />
@@ -58,7 +59,7 @@ function Modal({
         exit="exit"
         initial="hidden"
         animate="visible"
-        variants={dropIn}
+        variants={modalDisplay}
       >
         {modals[modalType]}
         {modalType === "intro" || modalType === "welcome" ? (

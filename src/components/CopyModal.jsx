@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import { fadeIn } from "../utils/Animations.js";
+import { modalDisplay } from "../utils/Animations.js";
 
 function CopyModal() {
   return (
@@ -10,7 +10,7 @@ function CopyModal() {
         exit="exit"
         initial="hidden"
         animate="visible"
-        variants={fadeIn}
+        variants={modalDisplay}
       >
         <h3 className="text-med">Copied!</h3>
       </motion.div>

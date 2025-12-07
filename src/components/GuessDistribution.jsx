@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, LabelList } from "recharts";
 function GuessDistribution({ data }) {
   return (
     <section className="distribution flex-center">
-      <h2 className="effect heading m1">Guess Distribution</h2>
+      <h2 className="effect heading m1">Guesses Chart</h2>
       <BarChart
         style={{
           width: "99%",

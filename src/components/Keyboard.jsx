@@ -6,6 +6,7 @@ function Keyboard({
   partial,
   inSolution,
   notInPuzzle,
+  currentAttempt,
   handleKeyPress,
   handleOtherKeys,
 }) {
@@ -20,6 +21,8 @@ function Keyboard({
               ? "green"
               : partial.includes(froot)
               ? "yellow"
+              : currentAttempt.includes(froot)
+              ? "used"
               : ""
           } `}
           onPointerDown={() => handleKeyPress(froot)}

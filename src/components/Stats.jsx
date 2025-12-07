@@ -4,16 +4,16 @@ import StreakCalendar from "./StreakCalendar.jsx";
 import GuessDistribution from "./GuessDistribution.jsx";
 
 import {
+  Zap,
   Ban,
-  Star,
-  Medal,
   Flame,
-  Puzzle,
   Trophy,
   Gamepad2,
-  CalendarDays,
+  TrendingUp,
   FlameKindling,
 } from "lucide-react";
+
+import { currentDay } from "../utils/Helpers.js";
 
 function Stats({
   xp,
@@ -21,9 +21,7 @@ function Stats({
   level,
   losses,
   streak,
-  guesses,
   levelUp,
-  maxStreak,
   gamesPlayed,
   lastSevenDays,
   dateInformation,
@@ -37,40 +35,31 @@ function Stats({
           <StatsItem
             label="Games"
             value={gamesPlayed}
-            icon={<Gamepad2 color={"#111"} />}
+            icon={<Gamepad2 color={"#111"} size={25} />}
           />
           <StatsItem
             label="Wins"
             value={wins}
-            icon={<Trophy color={"#deb203"} />}
+            icon={<Trophy color={"#deb203"} size={25} />}
           />
           <StatsItem
             label="Losses"
             value={losses}
-            icon={<Ban color={"#e76962"} />}
+            icon={<Ban color={"#e76962"} size={25} />}
           />
           <StatsItem
-            label="Guesses"
-            value={guesses}
-            icon={<Puzzle color={"#4bb00f"} />}
-          />
-          <StatsItem
-            label="Streak"
+            label="Win Streak"
             value={streak}
-            icon={<Flame color={"#ff8400"} />}
+            icon={<TrendingUp color={"#10a300"} size={25} />}
           />
           <StatsItem
-            label="Max Streak"
-            value={maxStreak}
-            icon={<FlameKindling color={"#ff8400"} />}
+            label="XP"
+            value={xp.toLocaleString("en-US")}
+            icon={<Zap color={"#B083FF"} size={25} />}
           />
-        </section>
-        <section className="stats-grid extra-padding">
-          <h2 className="heading effect max-cols">Experience</h2>
-          <div className="stats-item flex-center br">
+          <div className="stats-item flex-center">
             <div className="stats-text flex-center">
               <h3 className="text-lg">Level {level}</h3>
-              <Medal color={"#111"} />
             </div>
             <div className="progress-container">
               {level === 1 ? (
@@ -80,15 +69,24 @@ function Stats({
               )}
             </div>
           </div>
-          <StatsItem
-            label="XP"
-            value={xp.toLocaleString("en-US")}
-            icon={<Star color={"#deb203"} />}
-          />
+        </section>
+        <section className="stats-grid extra-padding">
+          <h2 className="heading effect max-cols">Experience</h2>
           <StatsItem
             label="Daily Streak"
             value={dateInformation.streak}
-            icon={<CalendarDays color={"#111"} />}
+            icon={
+              lastSevenDays[currentDay()] ? (
+                <Flame className="glow-icon" color={"#ff8400"} size={30} />
+              ) : (
+                <Flame color={"#111"} size={30} />
+              )
+            }
+          />
+          <StatsItem
+            label="Longest Streak"
+            value={dateInformation.longestStreak}
+            icon={<FlameKindling color={"#ff8400"} size={30} />}
           />
           <StreakCalendar stats={true} lastSevenDays={lastSevenDays} />
         </section>
