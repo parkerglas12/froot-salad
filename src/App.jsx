@@ -321,8 +321,7 @@ function App() {
       setDateInformation((prev) => ({
         streak: newStreak,
         lastGame: Temporal.Now.plainDateISO().toString(),
-        longestStreak:
-          newStreak > prev.longestStreak ? newStreak : prev.longestStreak,
+        longestStreak: Math.max(newStreak, prev.longestStreak ?? 0),
       }));
     } else {
       setDailyStreakIncreasing(false);
