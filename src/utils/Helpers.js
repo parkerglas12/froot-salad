@@ -2,7 +2,7 @@ import { Temporal } from "@js-temporal/polyfill";
 
 export const rows = 6;
 export const cols = 8;
-export const doubleXpThreshold = 5;
+export const doubleXpThreshold = 3;
 export const froots = [
   "apple",
   "banana",

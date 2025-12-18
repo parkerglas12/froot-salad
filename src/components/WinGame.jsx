@@ -34,7 +34,7 @@ function WinGame({
   dateInformation,
   dailyStreakIncreasing,
 }) {
-  const fullMsg = `I solved this cozy logic puzzle called Froot Salad in just ${roundGuesses} tries!\n${shareGrid}Use the clues, choose the correct froots, and see if you can make a perfect salad.\nPlay now:`;
+  const fullMsg = `${shareGrid}Think you can solve it?\n`;
 
   return (
     <>
@@ -69,7 +69,7 @@ function WinGame({
             <div className="flex-center">
               <div className="flex-center">
                 <ArrowBigUpDash color={"#111"} size={30} />
-                <h3 className="text-med">You're level {level}!</h3>
+                <h3 className="text-med">Level {level}!</h3>
               </div>
             </div>
           ) : (

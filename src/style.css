@@ -9,6 +9,7 @@
   --btn-hover-color: #d4d4d4;
   --bg: rgba(0, 0, 0, 0.35);
   --green: rgba(147, 245, 138, 0.75);
+  --other-green: #6ce362;
   --light-green: rgba(0, 255, 0, 0.25);
   --dark-green: #64df59;
   --red: rgba(231, 105, 98, 0.75);
@@ -76,7 +77,6 @@
   text-decoration: none;
   outline: none;
   border-radius: 0.25rem;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .bold {
@@ -203,8 +203,6 @@
   width: clamp(35px, 3.25vw, 40px);
   height: clamp(35px, 3.25vw, 40px);
   padding: 0.25rem;
-  background-color: var(--btn-color);
-  border-radius: 0.25rem;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -254,8 +252,6 @@
 }
 
 .keyboard-container .froot-key {
-  background-color: var(--btn-color);
-  border-radius: 0.25rem;
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -454,6 +450,7 @@
   width: fit-content;
   margin: 0.25rem 0 1rem 0;
   padding: 0.5rem 1rem;
+  box-shadow: 0 0.25rem 0 var(--btn-hover-color);
 }
 
 .information-container .information-layout .linkedin-icon {
@@ -513,10 +510,16 @@
   border-radius: 0.5rem;
 }
 
+.modal-container .modal.mini-modal .mini-level-up {
+  display: flex;
+  width: fit-content;
+  margin-top: 0.25rem;
+}
+
 .modal-container .modal.copy-modal {
   width: fit-content;
   padding: 0.5rem 1rem;
-  background-color: var(--dark-green);
+  background-color: var(--other-green);
   border-radius: 0.5rem;
 }
 
@@ -542,8 +545,10 @@
 }
 
 .modal-container .modal .modal-btn {
+  cursor: pointer;
   margin-top: 0.25rem;
   padding: 0.75rem 1rem;
+  box-shadow: 0 0.25rem 0 var(--btn-hover-color);
 }
 
 /* WINNING MODAL */
@@ -555,6 +560,10 @@
 
 .modal-container .modal .win-game-container {
   width: 100%;
+}
+
+.modal-container .modal .win-game-container > div {
+  flex: 1;
 }
 
 .modal-container .win-game-container .flex-column {
@@ -632,16 +641,10 @@
   transform: scale(1.05);
 }
 
-.keyboard-container .froot-key.clickable:hover,
-.information-container .information-layout .contact-btn:hover,
-.modal-container .modal .modal-btn:hover {
+.keyboard-container .froot-key.clickable:hover {
   cursor: pointer;
   background-color: var(--btn-hover-color);
   transform: scale(1.05);
-}
-
-.keyboard-container .froot-key.clickable:active {
-  transform: scale(0.9);
 }
 
 .keyboard-container .froot-key.green:hover {
@@ -652,22 +655,40 @@
   background-color: var(--dark-yellow);
 }
 
+.modal-container .modal .modal-btn:active,
+.information-container .information-layout .contact-btn:active {
+  box-shadow: none;
+  transform: translateY(0.25rem);
+}
+
+.keyboard-container .froot-key.clickable:active {
+  transform: scale(0.9);
+}
+
 /* ANIMATIONS */
-@keyframes glow {
+@keyframes flame {
   0% {
-    filter: drop-shadow(0 0 3px var(--orange));
-    transform: scale(1);
+    filter: drop-shadow(0 0 0.15rem #ff9a00);
+    transform: scaleX(0.95) scaleY(1.05) translateY(0);
+  }
+  25% {
+    filter: drop-shadow(0 0 0.3rem #ffb000);
+    transform: scaleX(1.05) scaleY(1.15) translateY(-1px);
   }
   50% {
-    filter: drop-shadow(0 0 8px var(--orange));
-    transform: scale(1.05);
+    filter: drop-shadow(0 0 0.45rem #ff6a00);
+    transform: scaleX(0.9) scaleY(1.25) translateY(-2px);
+  }
+  75% {
+    filter: drop-shadow(0 0 0.25rem #ffb000);
+    transform: scaleX(1) scaleY(1.1) translateY(-1px);
   }
   100% {
-    filter: drop-shadow(0 0 3px var(--orange));
-    transform: scale(1);
+    filter: drop-shadow(0 0 0.15rem #ff9a00);
+    transform: scaleX(0.95) scaleY(1.05) translateY(0);
   }
 }
 
 .glow-icon {
-  animation: glow 1.5s infinite alternate;
+  animation: flame 1.2s infinite ease-in-out;
 }

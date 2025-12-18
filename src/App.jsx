@@ -16,6 +16,7 @@ import MiniModal from "./components/MiniModal.jsx";
 import Information from "./components/Information.jsx";
 
 import {
+  url,
   rows,
   cols,
   froots,
@@ -51,6 +52,10 @@ function App() {
   const [dailyStreakIncreasing, setDailyStreakIncreasing] = useState(false);
   const [isLevelingUp, setIsLevelingUp] = useState(false);
   const [shareGrid, setShareGrid] = useState([]);
+
+  useEffect(() => {
+    console.log(solution);
+  }, [solution]);
 
   // LOCAL STORAGE STATES
   const [frootCollection, setFrootCollection] = useState(() => {
@@ -251,6 +256,21 @@ function App() {
     return { width: size[0], height: size[1] };
   }
 
+  function handlePageChange(page) {
+    setCurrentPage(page);
+  }
+
+  async function copyToClipboard() {
+    await navigator.clipboard.writeText(
+      `${shareGrid}Think you can solve it?\n${url}`
+    );
+    setShowCopyModal(true);
+    setTimeout(() => {
+      setShowCopyModal(false);
+    }, 1250);
+  }
+
+  /* GAME RESET & AFTER ROUND*/
   function gameReset() {
     setGamesPlayed((prev) => prev + 1);
     setPrevSolution(solution);
@@ -270,45 +290,29 @@ function App() {
     );
   }
 
-  function handleModalClick() {
-    setShowModal(false);
-    setRoundGuesses(0);
-    if (isLevelingUp) {
-      setIsLevelingUp(false);
+  function afterRound(newRound, newResult, newFullResults) {
+    setShareGrid(createShareGrid(newFullResults));
+    setResult(newResult);
+    setCurrentRound(newRound);
+    setFullResults(newFullResults);
+    setCurrentAttempt(new Array(cols).fill(null));
+  }
+
+  /* UPDATING */
+  function updateXp(xpGain, newStreak, xpBoost) {
+    const xpGained = (xpGain + newStreak * 10) * xpBoost;
+    const newXp = xp + xpGained;
+    setXp(newXp);
+    setXpGain(xpGained);
+    let remainingLevelUp = levelUp;
+    if (newXp >= levelUp) {
+      setIsLevelingUp(true);
     }
-    if (!introModalShown) {
-      setIntroModalShown(true);
+    while (newXp >= remainingLevelUp) {
+      remainingLevelUp *= 2;
+      setLevelUp((prev) => prev * 2);
+      setLevel((prev) => prev + 1);
     }
-  }
-
-  async function copyToClipboard() {
-    await navigator.clipboard.writeText(
-      `My Froot Salad Solution:\n${shareGrid}Play Now: https://frootsalad.com`
-    );
-    setShowCopyModal(true);
-    setTimeout(() => {
-      setShowCopyModal(false);
-    }, 1250);
-  }
-
-  function updateData(guessNum) {
-    setGuessDistributionData((prev) =>
-      prev.map((item) =>
-        item.name === identifier[guessNum]
-          ? { ...item, count: item.count + 1 }
-          : item
-      )
-    );
-  }
-
-  function checkEnoughIngredients(recipe, amount) {
-    return recipe.every((froot) => frootCollection[froot] >= amount)
-      ? true
-      : false;
-  }
-
-  function handlePageChange(page) {
-    setCurrentPage(page);
   }
 
   function updateDailyStreak() {
@@ -328,6 +332,17 @@ function App() {
     }
   }
 
+  function updateData(guessNum) {
+    setGuessDistributionData((prev) =>
+      prev.map((item) =>
+        item.name === identifier[guessNum]
+          ? { ...item, count: item.count + 1 }
+          : item
+      )
+    );
+  }
+
+  /* FROOT ITEMS */
   function makeFrootItem(amount, xpGain, frootArray) {
     const hasEnough = frootArray.every(
       (froot) => frootCollection[froot] >= amount
@@ -343,22 +358,90 @@ function App() {
           return acc;
         }, {})
       );
-      const newXp = xp + xpGain;
-      setXp(newXp);
-      setXpGain(xpGain);
+      updateXp(xpGain, 0, 1);
       setShowMiniModal(true);
       setTimeout(() => {
         setShowMiniModal(false);
+        setIsLevelingUp(false);
       }, 2000);
-      let remainingLevelUp = levelUp;
-      while (newXp >= remainingLevelUp) {
-        remainingLevelUp *= 2;
-        setLevelUp((prev) => prev * 2);
-        setLevel((prev) => prev + 1);
-      }
     }
   }
 
+  function checkEnoughIngredients(recipe, amount) {
+    return recipe.every((froot) => frootCollection[froot] >= amount)
+      ? true
+      : false;
+  }
+
+  /* DISPLAY ROUND FEEDBACK */
+  function displayFeedback(newResult) {
+    newResult.forEach((res, idx) => {
+      if (res === "absent") {
+        setNotInPuzzle((prev) => [...prev, currentAttempt[idx]]);
+      } else if (res === "correct") {
+        setInSolution((prev) => [...prev, currentAttempt[idx]]);
+      } else if (res === "left" || res === "right") {
+        setPartial((prev) => [...prev, currentAttempt[idx]]);
+      }
+    });
+  }
+
+  /* GAME RESULTS */
+  function loseGame() {
+    setTimeout(() => {
+      setModalType("loss");
+      setLosses((prev) => prev + 1);
+      setGuesses((prev) => prev + rows);
+      setStreak(0);
+      gameReset();
+    }, 2000);
+  }
+
+  function winGame(newRound) {
+    setRoundGuesses(newRound - 1);
+    updateData(newRound - 1);
+    setGuesses((prev) => prev + newRound - 1);
+    setTimeout(() => {
+      const newStreak = streak + 1;
+      setModalType("win");
+      setWins((prev) => prev + 1);
+      setFrootCollection((prev) =>
+        Object.keys(prev).reduce((acc, key) => {
+          acc[key] = prev[key] + (solution.includes(key) ? 1 : 0);
+          return acc;
+        }, {})
+      );
+      updateXp(100, newStreak, xpBoost);
+      setStreak(newStreak);
+      if (streak + 1 > maxStreak) {
+        setMaxStreak(streak + 1);
+      }
+      gameReset();
+    }, 2000);
+  }
+
+  /* DELETE A FROOT */
+  function deleteFroot(firstNullIdx) {
+    setGridArray((prev) => {
+      const newArray = [...prev];
+      newArray[firstNullIdx - 1] = null;
+      return newArray;
+    });
+    setCurrentAttempt((prev) => {
+      const newArray = [...prev];
+      const attemptFirstNull = currentAttempt.findIndex(
+        (item) => item === null
+      );
+      if (attemptFirstNull === -1) {
+        newArray[cols - 1] = null;
+      } else {
+        newArray[attemptFirstNull - 1] = null;
+      }
+      return newArray;
+    });
+  }
+
+  /* HANDLE KEY PRESSES */
   function handleKeyPress(froot) {
     const firstNullIdx = gridArray.findIndex((item) => item === null);
     if (
@@ -390,23 +473,7 @@ function App() {
       firstNullIdx !== 0 &&
       firstNullIdx > currentRound * cols - cols
     ) {
-      setGridArray((prev) => {
-        const newArray = [...prev];
-        newArray[firstNullIdx - 1] = null;
-        return newArray;
-      });
-      setCurrentAttempt((prev) => {
-        const newArray = [...prev];
-        const attemptFirstNull = currentAttempt.findIndex(
-          (item) => item === null
-        );
-        if (attemptFirstNull === -1) {
-          newArray[cols - 1] = null;
-        } else {
-          newArray[attemptFirstNull - 1] = null;
-        }
-        return newArray;
-      });
+      deleteFroot(firstNullIdx);
     } else if (
       (key === "enter" &&
         firstNullIdx % cols === 0 &&
@@ -416,65 +483,27 @@ function App() {
       const newRound = currentRound + 1;
       const newResult = checkAttempt(currentAttempt, solution);
       const newFullResults = [...fullResults, ...newResult];
-      newResult.forEach((res, idx) => {
-        if (res === "absent") {
-          setNotInPuzzle((prev) => [...prev, currentAttempt[idx]]);
-        } else if (res === "correct") {
-          setInSolution((prev) => [...prev, currentAttempt[idx]]);
-        } else if (res === "left" || res === "right") {
-          setPartial((prev) => [...prev, currentAttempt[idx]]);
-        }
-      });
+      displayFeedback(newResult);
       if (
         newResult.every((res) => res === "correct") &&
         newResult.length === cols
       ) {
-        setRoundGuesses(newRound - 1);
-        updateData(newRound - 1);
-        setGuesses((prev) => prev + newRound - 1);
-        setTimeout(() => {
-          const newStreak = streak + 1;
-          const xpGained = (100 + newStreak * 10) * xpBoost;
-          const newXp = xp + xpGained;
-          setXpGain(xpGained);
-          setModalType("win");
-          setWins((prev) => prev + 1);
-          setFrootCollection((prev) =>
-            Object.keys(prev).reduce((acc, key) => {
-              acc[key] = prev[key] + (solution.includes(key) ? 1 : 0);
-              return acc;
-            }, {})
-          );
-          setXp(newXp);
-          let remainingLevelUp = levelUp;
-          if (newXp >= levelUp) {
-            setIsLevelingUp(true);
-          }
-          while (newXp >= remainingLevelUp) {
-            remainingLevelUp *= 2;
-            setLevelUp((prev) => prev * 2);
-            setLevel((prev) => prev + 1);
-          }
-          setStreak(newStreak);
-          if (streak + 1 > maxStreak) {
-            setMaxStreak(streak + 1);
-          }
-          gameReset();
-        }, 2000);
+        winGame(newRound);
       } else if (newRound > rows) {
-        setTimeout(() => {
-          setModalType("loss");
-          setLosses((prev) => prev + 1);
-          setGuesses((prev) => prev + rows);
-          setStreak(0);
-          gameReset();
-        }, 2000);
+        loseGame();
       }
-      setShareGrid(createShareGrid(newFullResults));
-      setResult(newResult);
-      setCurrentRound(newRound);
-      setFullResults(newFullResults);
-      setCurrentAttempt(new Array(cols).fill(null));
+      afterRound(newRound, newResult, newFullResults);
+    }
+  }
+
+  function handleModalClick() {
+    setShowModal(false);
+    setRoundGuesses(0);
+    if (isLevelingUp) {
+      setIsLevelingUp(false);
+    }
+    if (!introModalShown) {
+      setIntroModalShown(true);
     }
   }
 
@@ -511,7 +540,13 @@ function App() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {showMiniModal && <MiniModal xpGain={xpGain} />}
+        {showMiniModal && (
+          <MiniModal
+            level={level}
+            xpGain={xpGain}
+            isLevelingUp={isLevelingUp}
+          />
+        )}
       </AnimatePresence>
       <AnimatePresence>{showCopyModal && <CopyModal />}</AnimatePresence>
       <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />

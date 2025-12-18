@@ -1,4 +1,4 @@
-import { days, currentDay } from "../utils/Helpers.js";
+import { days, currentDay, doubleXpThreshold } from "../utils/Helpers.js";
 
 import { Circle, CircleX, CircleCheck } from "lucide-react";
 
@@ -24,8 +24,8 @@ function StreakCalendar({ stats, lastSevenDays }) {
       </div>
       {stats && (
         <h3 className="text-sm max-cols m4">
-          A 5+ day streak earns you <span className="bold">DOUBLE XP</span> for
-          each win!
+          A {doubleXpThreshold}+ day streak earns you{" "}
+          <span className="bold">DOUBLE XP</span> for each win!
         </h3>
       )}
     </div>
