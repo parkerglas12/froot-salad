@@ -214,6 +214,8 @@ function App() {
     const dayGap = gap.days;
     if (dayGap > day) {
       setLastSevenDays(new Array(7).fill(false));
+      setShowModal(true);
+      setModalType("welcome");
     }
     if (!introModalShown) {
       setShowModal(true);
@@ -263,7 +265,7 @@ function App() {
     setShowCopyModal(true);
     setTimeout(() => {
       setShowCopyModal(false);
-    }, 1250);
+    }, 1000);
   }
 
   /* GAME RESET & AFTER ROUND*/

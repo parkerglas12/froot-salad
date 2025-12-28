@@ -35,14 +35,14 @@ function Keyboard({
         </button>
       ))}
       <button
-        className="delete-key froot-key btn flex-center max-span clickable"
+        className="delete-key froot-key btn flex-center clickable"
         onPointerDown={() => handleOtherKeys("delete")}
         aria-label="delete button"
       >
         <Delete size={27} color="#111" />
       </button>
       <button
-        className="enter-key froot-key btn flex-center max-span clickable"
+        className="enter-key froot-key btn flex-center clickable"
         onPointerDown={() => handleOtherKeys("enter")}
         aria-label="enter button"
       >

@@ -200,9 +200,11 @@
 }
 
 .navbar .nav-container .btn {
+  cursor: pointer;
   width: clamp(35px, 3.25vw, 40px);
   height: clamp(35px, 3.25vw, 40px);
   padding: 0.25rem;
+  will-change: transform;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -252,6 +254,8 @@
 }
 
 .keyboard-container .froot-key {
+  will-change: transform;
+  touch-action: manipulation;
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -269,6 +273,10 @@
 
 .keyboard-container .froot-key.used {
   background-color: var(--btn-hover-color);
+}
+
+.keyboard-container .froot-key.clickable {
+  cursor: pointer;
 }
 
 .keyboard-container .froot-key img {
@@ -394,6 +402,7 @@
 }
 
 .inventory-container .inventory-layout .item-img {
+  cursor: pointer;
   width: clamp(50px, 45%, 100px);
   transition: transform 0.3s ease;
 }
@@ -519,8 +528,11 @@
 .modal-container .modal.copy-modal {
   width: fit-content;
   padding: 0.5rem 1rem;
-  background-color: var(--other-green);
   border-radius: 0.5rem;
+}
+
+.modal-container .modal.copy-modal .text-med {
+  color: var(--black);
 }
 
 .modal-container .modal.intro {
@@ -603,6 +615,8 @@
 }
 
 .modal-container .modal .copy-icon {
+  cursor: pointer;
+  will-change: transform;
   transition: transform 0.3s ease;
 }
 
@@ -629,30 +643,29 @@
 }
 
 /* HOVER EFFECTS */
-.navbar .nav-container .btn:hover {
-  cursor: pointer;
-  background-color: var(--green);
-  transform: scale(1.05);
-}
+@media (hover: hover) and (pointer: fine) {
+  .navbar .nav-container .btn:hover {
+    background-color: var(--green);
+    transform: scale(1.05);
+  }
 
-.inventory-container .inventory-layout .item-img:hover,
-.modal-container .modal .copy-icon:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-}
+  .inventory-container .inventory-layout .item-img:hover,
+  .modal-container .modal .copy-icon:hover {
+    transform: scale(1.05);
+  }
 
-.keyboard-container .froot-key.clickable:hover {
-  cursor: pointer;
-  background-color: var(--btn-hover-color);
-  transform: scale(1.05);
-}
+  .keyboard-container .froot-key.clickable:hover {
+    background-color: var(--btn-hover-color);
+    transform: scale(1.05);
+  }
 
-.keyboard-container .froot-key.green:hover {
-  background-color: var(--dark-green);
-}
+  .keyboard-container .froot-key.green:hover {
+    background-color: var(--dark-green);
+  }
 
-.keyboard-container .froot-key.yellow:hover {
-  background-color: var(--dark-yellow);
+  .keyboard-container .froot-key.yellow:hover {
+    background-color: var(--dark-yellow);
+  }
 }
 
 .modal-container .modal .modal-btn:active,
