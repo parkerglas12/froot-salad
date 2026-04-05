@@ -34,7 +34,7 @@ function Intro() {
               src="blueberry.webp"
               alt="blueberry in the solution but needs to move right with a yellow background"
             />
-            <ChevronsRight className="icon" size={18} />
+            <ChevronsRight className="icon" size={14} />
           </div>
           <figcaption className="text-sm">Move right</figcaption>
         </figure>
@@ -44,7 +44,7 @@ function Intro() {
               src="kiwi.webp"
               alt="kiwi in the solution but needs to move left with a yellow background"
             />
-            <ChevronsLeft className="icon" size={18} />
+            <ChevronsLeft className="icon" size={14} />
           </div>
           <figcaption className="text-sm">Move left</figcaption>
         </figure>

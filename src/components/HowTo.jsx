@@ -24,7 +24,7 @@ function HowTo() {
             src="blueberry.webp"
             alt="blueberry in the solution but needs to move right with a yellow background"
           />
-          <ChevronsRight className="icon" size={18} />
+          <ChevronsRight className="icon" size={14} />
         </div>
         <div className="grid-item flex-center red">
           <img
@@ -37,7 +37,7 @@ function HowTo() {
             src="raspberry.webp"
             alt="raspberry in the solution but needs to move left with a yellow background"
           />
-          <ChevronsLeft className="icon" size={18} />
+          <ChevronsLeft className="icon" size={14} />
         </div>
         <div className="grid-item flex-center green">
           <img
@@ -50,14 +50,14 @@ function HowTo() {
             src="peach.webp"
             alt="peach in the solution but needs to move right with a yellow background"
           />
-          <ChevronsRight className="icon" size={18} />
+          <ChevronsRight className="icon" size={14} />
         </div>
         <div className="grid-item flex-center yellow">
           <img
             src="watermelon.webp"
             alt="watermelon in the solution but needs to move left with a yellow background"
           />
-          <ChevronsLeft className="icon" size={18} />
+          <ChevronsLeft className="icon" size={14} />
         </div>
         <div className="grid-item flex-center red">
           <img
@@ -113,14 +113,14 @@ function HowTo() {
                   src="raspberry.webp"
                   alt="raspberry in the solution but needs to move left with a yellow background"
                 />
-                <ChevronsLeft className="icon" size={18} />
+                <ChevronsLeft className="icon" size={14} />
               </div>
               <div className="grid-item flex-center yellow">
                 <img
                   src="watermelon.webp"
                   alt="watermelon in the solution but needs to move left with a yellow background"
                 />
-                <ChevronsLeft className="icon" size={18} />
+                <ChevronsLeft className="icon" size={14} />
               </div>
             </div>
             <figcaption className="text-sm">In solution — move left</figcaption>
@@ -134,14 +134,14 @@ function HowTo() {
                   src="blueberry.webp"
                   alt="blueberry in the solution but needs to move right with a yellow background"
                 />
-                <ChevronsRight className="icon" size={18} />
+                <ChevronsRight className="icon" size={14} />
               </div>
               <div className="grid-item flex-center yellow">
                 <img
                   src="peach.webp"
                   alt="peach in the solution but needs to move right with a yellow background"
                 />
-                <ChevronsRight className="icon" size={18} />
+                <ChevronsRight className="icon" size={14} />
               </div>
             </div>
             <figcaption className="text-sm">

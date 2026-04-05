@@ -7,12 +7,22 @@ function Welcome({ dateInformation, lastSevenDays }) {
     <>
       <h2 className="heading">Welcome Back!</h2>
       <div className="welcome-container">
-        <div className="flex-center">
-          <Flame color={"#111"} size={45} />
+        <div
+          className="flex-center"
+          style={{ gap: "0.25rem", marginTop: "0.25rem" }}
+        >
+          <Flame color={"#fb923c"} size={30} />
           <p className="text-lg">{dateInformation.streak}</p>
         </div>
-        <p className="text-sm">day streak</p>
-        <p className="text-sm">Ready to extend your streak?</p>
+        <p className="text-sm" style={{ textAlign: "center" }}>
+          day streak
+        </p>
+        <p
+          className="text-sm"
+          style={{ textAlign: "center", marginTop: "0.25rem" }}
+        >
+          Ready to extend your streak?
+        </p>
       </div>
       <div className="welcome-calendar">
         <StreakCalendar lastSevenDays={lastSevenDays} />

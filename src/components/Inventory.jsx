@@ -23,10 +23,14 @@ function Inventory({
   return (
     <main className="inventory-container flex-center">
       <section className="inventory-layout">
-        <h2 className="heading effect max-cols">Froot Collection</h2>
+        <h2 className="heading section-label">Froot Collection</h2>
         <section className="collection-grid">
           {Object.entries(frootCollection).map(([key, value]) => (
-            <div className="collection-item flex-center br" key={key}>
+            <div
+              className="collection-item flex-center"
+              key={key}
+              style={{ flexDirection: "column", gap: "0.1rem" }}
+            >
               <img
                 src={`${key}.webp`}
                 alt={`number of ${key}s you have`}
@@ -38,7 +42,7 @@ function Inventory({
             </div>
           ))}
         </section>
-        <h2 className="heading effect max-cols m2">Froot Stand</h2>
+        <h2 className="heading section-label m2">Froot Stand</h2>
         <section className="stand-grid">
           <section className="stand-wrapper flex-center">
             {level >= 3 ? (
@@ -63,10 +67,17 @@ function Inventory({
                 </div>
               </>
             ) : (
-              <>
-                <LockKeyhole className="icon" size={40} color={"#111"} />
+              <div
+                className="flex-center"
+                style={{
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                  padding: "0.5rem 0",
+                }}
+              >
+                <LockKeyhole size={26} color={"#d1d5db"} />
                 <h3 className="text-sm">Unlocks At Level 3</h3>
-              </>
+              </div>
             )}
           </section>
           <section className="stand-wrapper flex-center">
@@ -92,10 +103,17 @@ function Inventory({
                 </div>
               </>
             ) : (
-              <>
-                <LockKeyhole className="icon" size={40} color={"#111"} />
+              <div
+                className="flex-center"
+                style={{
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                  padding: "0.5rem 0",
+                }}
+              >
+                <LockKeyhole size={26} color={"#d1d5db"} />
                 <h3 className="text-sm">Unlocks At Level 5</h3>
-              </>
+              </div>
             )}
           </section>
           <section className="stand-wrapper flex-center">
@@ -121,10 +139,17 @@ function Inventory({
                 </div>
               </>
             ) : (
-              <>
-                <LockKeyhole className="icon" size={40} color={"#111"} />
+              <div
+                className="flex-center"
+                style={{
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                  padding: "0.5rem 0",
+                }}
+              >
+                <LockKeyhole size={26} color={"#d1d5db"} />
                 <h3 className="text-sm">Unlocks At Level 7</h3>
-              </>
+              </div>
             )}
           </section>
         </section>

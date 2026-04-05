@@ -43,14 +43,18 @@ function Privacy() {
         via Linkedin.
       </p>
       <a
-        className="m4"
+        className="policy-text m4"
         href="privacy_policy.html"
         target="_blank"
         rel="noopener noreferrer"
       >
         Privacy Policy
       </a>
-      <a href="https://www.simpleanalytics.com/" target="_blank">
+      <a
+        href="https://www.simpleanalytics.com/"
+        target="_blank"
+        className="policy-text"
+      >
         Simple Analytics
       </a>
     </>

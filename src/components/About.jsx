@@ -25,30 +25,10 @@ function About() {
         to make a logic puzzle game.
       </p>
       <p className="text-sm">
-        After building a couple of my first ideas for a puzzle game, I really
-        started to learn the fundamentals of ReactJS. To be honest, the games
-        weren't all that great, but I had a lot of fun building them. I then had
-        the idea for this game and I knew it was far better than the others.
+        I came up with the idea for Froot Salad and started building it. It's
+        been a fun process to learn something new and I hope you enjoy playing
+        it!
       </p>
-      <p className="text-sm">
-        I find myself really enjoying the gameplay, and the early feedback I've
-        gotten has indicated that some users enjoy it as well. My goal is to
-        continue to grow and improve the game and if you have any suggestions
-        about how I can do this I'd love to connect with you via Linkedin!
-      </p>
-      <a
-        className="contact-btn flex-center btn text-med"
-        href="https://www.linkedin.com/in/parker-glas-09145536a/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Contact Me!
-        <img
-          src="linkedin.svg"
-          alt="linkedin social media icon"
-          className="linkedin-icon"
-        />
-      </a>
     </>
   );
 }

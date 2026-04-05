@@ -13,9 +13,9 @@ function ProgressBar({ start, end, current }) {
         style={{
           height: "100%",
           width: `${getProgress(start, end, current)}%`,
-          background: "#00aeff",
-          borderRadius: "0.25rem",
-          transition: "width 0.3s ease",
+          background: "linear-gradient(90deg, #60a5fa, #a78bfa)",
+          borderRadius: "999px",
+          transition: "width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
         }}
       ></div>
     </div>

@@ -39,14 +39,14 @@ function Keyboard({
         onPointerDown={() => handleOtherKeys("delete")}
         aria-label="delete button"
       >
-        <Delete size={27} color="#111" />
+        <Delete size={20} color="#1a1a1a" />
       </button>
       <button
         className="enter-key froot-key btn flex-center clickable"
         onPointerDown={() => handleOtherKeys("enter")}
         aria-label="enter button"
       >
-        <CircleCheckBig size={27} color="#111" />
+        <CircleCheckBig size={20} color="#1a1a1a" />
       </button>
     </section>
   );

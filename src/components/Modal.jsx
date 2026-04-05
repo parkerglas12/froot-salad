@@ -5,7 +5,7 @@ import WinGame from "./WinGame.jsx";
 import Welcome from "./Welcome.jsx";
 import LoseGame from "./LoseGame.jsx";
 
-import { modalDisplay } from "../utils/Animations.js";
+import { modalDisplay, overlayFade } from "../utils/Animations.js";
 
 function Modal({
   xp,
@@ -53,10 +53,15 @@ function Modal({
   };
 
   return (
-    <div className="modal-container flex-center">
+    <motion.div
+      className="modal-container flex-center"
+      variants={overlayFade}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <motion.div
         className={`modal flex-center ${modalType === "intro" && "intro"}`}
-        exit="exit"
         initial="hidden"
         animate="visible"
         variants={modalDisplay}
@@ -72,7 +77,7 @@ function Modal({
           </button>
         )}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 

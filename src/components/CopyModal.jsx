@@ -1,20 +1,25 @@
 import { motion } from "framer-motion";
 
-import { modalDisplay } from "../utils/Animations.js";
+import { modalDisplay, overlayFade } from "../utils/Animations.js";
 
 function CopyModal() {
   return (
-    <div className="modal-container no-shadow flex-center">
+    <motion.div
+      className="modal-container no-shadow flex-center"
+      variants={overlayFade}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <motion.div
         className="modal copy-modal flex-center"
-        exit="exit"
         initial="hidden"
         animate="visible"
         variants={modalDisplay}
       >
         <h3 className="text-med">Copied!</h3>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
