@@ -53,10 +53,6 @@ function App() {
   const [isLevelingUp, setIsLevelingUp] = useState(false);
   const [shareGrid, setShareGrid] = useState([]);
 
-  useEffect(() => {
-    console.log(solution);
-  }, [solution]);
-
   // LOCAL STORAGE STATES
   const [frootCollection, setFrootCollection] = useState(() => {
     const storedValue = localStorage.getItem("frootCollection");
