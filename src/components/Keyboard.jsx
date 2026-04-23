@@ -20,10 +20,10 @@ function Keyboard({
             inSolution.includes(froot)
               ? "green"
               : partial.includes(froot)
-              ? "yellow"
-              : currentAttempt.includes(froot)
-              ? "used"
-              : ""
+                ? "yellow"
+                : currentAttempt.includes(froot)
+                  ? "used"
+                  : ""
           } `}
           onPointerDown={() => handleKeyPress(froot)}
           key={froot}
@@ -39,14 +39,14 @@ function Keyboard({
         onPointerDown={() => handleOtherKeys("delete")}
         aria-label="delete button"
       >
-        <Delete size={20} color="#1a1a1a" />
+        <Delete size={25} color="#1a1a1a" />
       </button>
       <button
         className="enter-key froot-key btn flex-center clickable"
         onPointerDown={() => handleOtherKeys("enter")}
         aria-label="enter button"
       >
-        <CircleCheckBig size={20} color="#1a1a1a" />
+        <CircleCheckBig size={25} color="#1a1a1a" />
       </button>
     </section>
   );

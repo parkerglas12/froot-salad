@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 
 import Intro from "./Intro.jsx";
-import WinGame from "./WinGame.jsx";
+import WinXp from "./WinXp.jsx";
+import WinLevel from "./WinLevel.jsx";
+import WinStreak from "./WinStreak.jsx";
 import Welcome from "./Welcome.jsx";
 import LoseGame from "./LoseGame.jsx";
 
@@ -11,7 +13,6 @@ function Modal({
   xp,
   level,
   xpGain,
-  streak,
   levelUp,
   shareGrid,
   modalType,
@@ -25,22 +26,19 @@ function Modal({
   dailyStreakIncreasing,
 }) {
   const modals = {
-    win: (
-      <WinGame
+    "win-xp": (
+      <WinXp
         xp={xp}
         level={level}
         xpGain={xpGain}
-        streak={streak}
         levelUp={levelUp}
-        solution={solution}
         shareGrid={shareGrid}
-        isLevelingUp={isLevelingUp}
         roundGuesses={roundGuesses}
         copyToClipboard={copyToClipboard}
-        dateInformation={dateInformation}
-        dailyStreakIncreasing={dailyStreakIncreasing}
       />
     ),
+    "win-streak": <WinStreak dateInformation={dateInformation} />,
+    "win-level": <WinLevel level={level} />,
     loss: <LoseGame solution={solution} />,
     intro: <Intro />,
     welcome: (
@@ -52,6 +50,19 @@ function Modal({
     ),
   };
 
+  const hasNextStep =
+    (modalType === "win-xp" && (dailyStreakIncreasing || isLevelingUp)) ||
+    (modalType === "win-streak" && isLevelingUp);
+
+  let buttonLabel;
+  if (modalType === "intro" || modalType === "welcome") {
+    buttonLabel = "Play Now!";
+  } else if (hasNextStep) {
+    buttonLabel = "Continue";
+  } else {
+    buttonLabel = "Play Again!";
+  }
+
   return (
     <motion.div
       className="modal-container flex-center"
@@ -61,21 +72,15 @@ function Modal({
       exit="exit"
     >
       <motion.div
-        className={`modal flex-center ${modalType === "intro" && "intro"}`}
+        className={`modal flex-center ${modalType === "intro" ? "intro" : ""}`}
         initial="hidden"
         animate="visible"
         variants={modalDisplay}
       >
         {modals[modalType]}
-        {modalType === "intro" || modalType === "welcome" ? (
-          <button className="modal-btn btn text-med" onClick={handleModalClick}>
-            Play Now!
-          </button>
-        ) : (
-          <button className="modal-btn btn text-med" onClick={handleModalClick}>
-            Play Again!
-          </button>
-        )}
+        <button className="modal-btn btn text-med" onClick={handleModalClick}>
+          {buttonLabel}
+        </button>
       </motion.div>
     </motion.div>
   );

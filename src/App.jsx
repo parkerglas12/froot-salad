@@ -33,7 +33,7 @@ function App() {
   const [currentRound, setCurrentRound] = useState(1);
   const [roundGuesses, setRoundGuesses] = useState(0);
   const [currentAttempt, setCurrentAttempt] = useState(
-    new Array(cols).fill(null)
+    new Array(cols).fill(null),
   );
   const [result, setResult] = useState([]);
   const [fullResults, setFullResults] = useState([]);
@@ -52,6 +52,10 @@ function App() {
   const [dailyStreakIncreasing, setDailyStreakIncreasing] = useState(false);
   const [isLevelingUp, setIsLevelingUp] = useState(false);
   const [shareGrid, setShareGrid] = useState([]);
+
+  useEffect(() => {
+    console.log(solution);
+  }, [solution]);
 
   // LOCAL STORAGE STATES
   const [frootCollection, setFrootCollection] = useState(() => {
@@ -155,7 +159,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       "guessDistributionData",
-      JSON.stringify(guessDistributionData)
+      JSON.stringify(guessDistributionData),
     );
   }, [guessDistributionData]);
 
@@ -209,7 +213,7 @@ function App() {
     const todayISO = Temporal.Now.plainDateISO();
     const gap = todayISO.since(
       Temporal.PlainDate.from(dateInformation.lastGame),
-      { largestUnit: "days" }
+      { largestUnit: "days" },
     );
     const dayGap = gap.days;
     if (dayGap > day) {
@@ -260,7 +264,7 @@ function App() {
 
   async function copyToClipboard() {
     await navigator.clipboard.writeText(
-      `${shareGrid}Think you can solve it?\n${url}`
+      `${shareGrid}Think you can solve it?\n${url}`,
     );
     setShowCopyModal(true);
     setTimeout(() => {
@@ -284,7 +288,7 @@ function App() {
     setSolution(getRandomSalad(froots));
     updateDailyStreak();
     setLastSevenDays((prev) =>
-      prev.map((day, index) => (index === currentDay() ? true : day))
+      prev.map((day, index) => (index === currentDay() ? true : day)),
     );
   }
 
@@ -335,15 +339,15 @@ function App() {
       prev.map((item) =>
         item.name === identifier[guessNum]
           ? { ...item, count: item.count + 1 }
-          : item
-      )
+          : item,
+      ),
     );
   }
 
   /* FROOT ITEMS */
   function makeFrootItem(amount, xpGain, frootArray) {
     const hasEnough = frootArray.every(
-      (froot) => frootCollection[froot] >= amount
+      (froot) => frootCollection[froot] >= amount,
     );
     if (hasEnough) {
       setFrootCollection((prev) =>
@@ -354,7 +358,7 @@ function App() {
             acc[key] = prev[key];
           }
           return acc;
-        }, {})
+        }, {}),
       );
       updateXp(xpGain, 0, 1);
       setShowMiniModal(true);
@@ -401,13 +405,13 @@ function App() {
     setGuesses((prev) => prev + newRound - 1);
     setTimeout(() => {
       const newStreak = streak + 1;
-      setModalType("win");
+      setModalType("win-xp");
       setWins((prev) => prev + 1);
       setFrootCollection((prev) =>
         Object.keys(prev).reduce((acc, key) => {
           acc[key] = prev[key] + (solution.includes(key) ? 1 : 0);
           return acc;
-        }, {})
+        }, {}),
       );
       updateXp(100, newStreak, xpBoost);
       setStreak(newStreak);
@@ -428,7 +432,7 @@ function App() {
     setCurrentAttempt((prev) => {
       const newArray = [...prev];
       const attemptFirstNull = currentAttempt.findIndex(
-        (item) => item === null
+        (item) => item === null,
       );
       if (attemptFirstNull === -1) {
         newArray[cols - 1] = null;
@@ -456,7 +460,7 @@ function App() {
       setCurrentAttempt((prev) => {
         const newArray = [...prev];
         const attemptFirstNull = currentAttempt.findIndex(
-          (item) => item === null
+          (item) => item === null,
         );
         newArray[attemptFirstNull] = froot;
         return newArray;
@@ -495,10 +499,24 @@ function App() {
   }
 
   function handleModalClick() {
+    if (modalType === "win-xp" && dailyStreakIncreasing) {
+      setModalType("win-streak");
+      return;
+    }
+    if (
+      (modalType === "win-xp" || modalType === "win-streak") &&
+      isLevelingUp
+    ) {
+      setModalType("win-level");
+      return;
+    }
     setShowModal(false);
     setRoundGuesses(0);
     if (isLevelingUp) {
       setIsLevelingUp(false);
+    }
+    if (dailyStreakIncreasing) {
+      setDailyStreakIncreasing(false);
     }
     if (!introModalShown) {
       setIntroModalShown(true);
@@ -527,7 +545,7 @@ function App() {
               handleModalClick={handleModalClick}
               dailyStreakIncreasing={dailyStreakIncreasing}
             />
-            {modalType === "win" && (
+            {modalType.startsWith("win-") && (
               <Confetti
                 width={width}
                 height={height}

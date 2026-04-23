@@ -11,7 +11,7 @@ function Welcome({ dateInformation, lastSevenDays }) {
           className="flex-center"
           style={{ gap: "0.25rem", marginTop: "0.25rem" }}
         >
-          <Flame color={"#fb923c"} size={30} />
+          <Flame color={"#1a1a1a"} size={30} />
           <p className="text-lg">{dateInformation.streak}</p>
         </div>
         <p className="text-sm" style={{ textAlign: "center" }}>
