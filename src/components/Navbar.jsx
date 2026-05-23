@@ -39,20 +39,6 @@ function Navbar({ currentPage, handlePageChange }) {
               onClick={() => handlePageChange("information")}
             />
           </li>
-          <li>
-            <a
-              className="contact-btn flex-center btn text-med"
-              href="https://www.linkedin.com/in/parker-glas-09145536a/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="linkedin.svg"
-                alt="linkedin social media icon"
-                className="linkedin-icon"
-              />
-            </a>
-          </li>
         </ul>
       </nav>
     </header>

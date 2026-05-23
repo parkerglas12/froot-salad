@@ -39,8 +39,7 @@ function Privacy() {
         If you have any other questions or concerns about your privacy while
         using the site, or if you have any tips for me on how to improve my
         practices, please email me at{" "}
-        <span className="bold">parkerglas@gmail.com</span> or reach out to me
-        via Linkedin.
+        <span className="bold">parkerglas@gmail.com</span>
       </p>
       <a
         className="policy-text m4"

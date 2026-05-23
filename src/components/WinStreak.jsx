@@ -16,7 +16,7 @@ function WinStreak({ dateInformation }) {
       <p className="win-text text-sm">
         {streak === 1
           ? "You started a new streak!"
-          : `You're on a ${streak}-day roll.`}
+          : `You're on a ${streak}-day streak!`}
       </p>
       <motion.div
         className="win-celebrate flex-center flex-column"
